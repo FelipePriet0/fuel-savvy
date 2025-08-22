@@ -121,6 +121,56 @@ export type Database = {
           },
         ]
       }
+      cupons: {
+        Row: {
+          ativo: boolean | null
+          combustivel: string
+          criado_em: string | null
+          desconto_total: number
+          gasto_minimo: number
+          id: string
+          posto_id: string
+          preco_base_litro: number
+          validade_fim: string | null
+          validade_ini: string | null
+          valor_texto: string | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          combustivel: string
+          criado_em?: string | null
+          desconto_total: number
+          gasto_minimo: number
+          id?: string
+          posto_id: string
+          preco_base_litro: number
+          validade_fim?: string | null
+          validade_ini?: string | null
+          valor_texto?: string | null
+        }
+        Update: {
+          ativo?: boolean | null
+          combustivel?: string
+          criado_em?: string | null
+          desconto_total?: number
+          gasto_minimo?: number
+          id?: string
+          posto_id?: string
+          preco_base_litro?: number
+          validade_fim?: string | null
+          validade_ini?: string | null
+          valor_texto?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cupons_posto_id_fkey"
+            columns: ["posto_id"]
+            isOneToOne: false
+            referencedRelation: "postos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       favorites: {
         Row: {
           created_at: string | null
@@ -194,6 +244,51 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      postos: {
+        Row: {
+          bandeira: string | null
+          cnpj: string
+          created_at: string | null
+          email: string | null
+          endereco: Json | null
+          id: string
+          lat: number | null
+          lng: number | null
+          nome_fantasia: string
+          role: string | null
+          status: string | null
+          telefone: string | null
+        }
+        Insert: {
+          bandeira?: string | null
+          cnpj: string
+          created_at?: string | null
+          email?: string | null
+          endereco?: Json | null
+          id?: string
+          lat?: number | null
+          lng?: number | null
+          nome_fantasia: string
+          role?: string | null
+          status?: string | null
+          telefone?: string | null
+        }
+        Update: {
+          bandeira?: string | null
+          cnpj?: string
+          created_at?: string | null
+          email?: string | null
+          endereco?: Json | null
+          id?: string
+          lat?: number | null
+          lng?: number | null
+          nome_fantasia?: string
+          role?: string | null
+          status?: string | null
+          telefone?: string | null
+        }
+        Relationships: []
       }
       profiles: {
         Row: {
@@ -422,6 +517,42 @@ export type Database = {
           zip_code?: string | null
         }
         Relationships: []
+      }
+      uso_cupons: {
+        Row: {
+          cupom_id: string
+          id: string
+          motorista_id: string
+          usado_em: string | null
+        }
+        Insert: {
+          cupom_id: string
+          id?: string
+          motorista_id: string
+          usado_em?: string | null
+        }
+        Update: {
+          cupom_id?: string
+          id?: string
+          motorista_id?: string
+          usado_em?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "uso_cupons_cupom_id_fkey"
+            columns: ["cupom_id"]
+            isOneToOne: false
+            referencedRelation: "cupons"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "uso_cupons_motorista_id_fkey"
+            columns: ["motorista_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
