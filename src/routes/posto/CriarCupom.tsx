@@ -9,6 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { supabase } from '@/lib/supabaseClient'
 import { getCurrentUser } from '@/lib/auth'
+import { isPostoProfileComplete } from '@/lib/utils'
 import { Loader2, Plus, MapPin, Building2 } from 'lucide-react'
 import { toast } from '@/hooks/use-toast'
 
@@ -52,6 +53,7 @@ const CriarCupom = () => {
   })
   const [loading, setLoading] = useState(false)
   const [showCompleteProfile, setShowCompleteProfile] = useState(false)
+  const [missingFields, setMissingFields] = useState<string[]>([])
   const [postoData, setPostoData] = useState<PostoCompleto>({
     endereco: {
       cep: '',
@@ -103,6 +105,8 @@ const CriarCupom = () => {
           .single()
 
         if (posto?.status === 'incomplete') {
+          const fields = await isPostoProfileComplete(user.id)
+          setMissingFields(fields)
           setShowCompleteProfile(true)
         }
       } catch (error) {
@@ -145,6 +149,7 @@ const CriarCupom = () => {
       if (error) throw error
 
       setShowCompleteProfile(false)
+      setMissingFields([])
       toast({
         title: "Perfil completado!",
         description: "Agora você pode criar cupons",
@@ -205,6 +210,13 @@ const CriarCupom = () => {
           description: "Data de início deve ser anterior à data de fim",
           variant: "destructive"
         })
+        return
+      }
+
+      const missing = await isPostoProfileComplete(user.id)
+      if (missing.length > 0) {
+        setMissingFields(missing)
+        setShowCompleteProfile(true)
         return
       }
 
@@ -398,6 +410,12 @@ const CriarCupom = () => {
             <p className="text-muted-foreground">
               Para criar cupons, precisamos de algumas informações adicionais sobre seu posto.
             </p>
+
+            {missingFields.length > 0 && (
+              <div className="p-4 text-sm rounded-md bg-destructive/10 text-destructive">
+                Preencha os seguintes campos: {missingFields.join(', ')}
+              </div>
+            )}
 
             {/* Endereço */}
             <div className="space-y-4">
