@@ -82,7 +82,7 @@ const HistoricoCupons = () => {
       const transformedData = await Promise.all((data || []).map(async (item: any) => {
         // Get motorista data separately
         const { data: motoristaData } = await supabase
-          .from('profiles')
+          .from('perfis')
           .select('nome')
           .eq('id', item.motorista_id)
           .single()

@@ -245,6 +245,72 @@ export type Database = {
           },
         ]
       }
+      perfis: {
+        Row: {
+          address: string | null
+          avatar_url: string | null
+          city: string | null
+          cpf: string | null
+          created_at: string | null
+          email: string | null
+          full_name: string | null
+          id: string
+          latitude: number | null
+          longitude: number | null
+          nome: string | null
+          phone: string | null
+          role: string | null
+          state: string | null
+          telefone: string | null
+          tipo_usuario: string | null
+          total_savings: number | null
+          updated_at: string | null
+          zip_code: string | null
+        }
+        Insert: {
+          address?: string | null
+          avatar_url?: string | null
+          city?: string | null
+          cpf?: string | null
+          created_at?: string | null
+          email?: string | null
+          full_name?: string | null
+          id: string
+          latitude?: number | null
+          longitude?: number | null
+          nome?: string | null
+          phone?: string | null
+          role?: string | null
+          state?: string | null
+          telefone?: string | null
+          tipo_usuario?: string | null
+          total_savings?: number | null
+          updated_at?: string | null
+          zip_code?: string | null
+        }
+        Update: {
+          address?: string | null
+          avatar_url?: string | null
+          city?: string | null
+          cpf?: string | null
+          created_at?: string | null
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          nome?: string | null
+          phone?: string | null
+          role?: string | null
+          state?: string | null
+          telefone?: string | null
+          tipo_usuario?: string | null
+          total_savings?: number | null
+          updated_at?: string | null
+          zip_code?: string | null
+        }
+        Relationships: []
+      }
       postos: {
         Row: {
           bandeira: string | null
@@ -295,14 +361,18 @@ export type Database = {
           address: string | null
           avatar_url: string | null
           city: string | null
+          cpf: string | null
           created_at: string | null
           email: string | null
           full_name: string | null
           id: string
           latitude: number | null
           longitude: number | null
+          nome: string | null
           phone: string | null
+          role: string | null
           state: string | null
+          telefone: string | null
           tipo_usuario: Database["public"]["Enums"]["tipo_usuario_enum"] | null
           total_savings: number | null
           updated_at: string | null
@@ -312,14 +382,18 @@ export type Database = {
           address?: string | null
           avatar_url?: string | null
           city?: string | null
+          cpf?: string | null
           created_at?: string | null
           email?: string | null
           full_name?: string | null
           id: string
           latitude?: number | null
           longitude?: number | null
+          nome?: string | null
           phone?: string | null
+          role?: string | null
           state?: string | null
+          telefone?: string | null
           tipo_usuario?: Database["public"]["Enums"]["tipo_usuario_enum"] | null
           total_savings?: number | null
           updated_at?: string | null
@@ -329,14 +403,18 @@ export type Database = {
           address?: string | null
           avatar_url?: string | null
           city?: string | null
+          cpf?: string | null
           created_at?: string | null
           email?: string | null
           full_name?: string | null
           id?: string
           latitude?: number | null
           longitude?: number | null
+          nome?: string | null
           phone?: string | null
+          role?: string | null
           state?: string | null
+          telefone?: string | null
           tipo_usuario?: Database["public"]["Enums"]["tipo_usuario_enum"] | null
           total_savings?: number | null
           updated_at?: string | null

@@ -13,7 +13,7 @@ export const getCurrentUser = async (): Promise<UserWithRole | null> => {
 
   // Buscar role do usuário
   const { data: profile } = await supabase
-    .from('profiles')
+    .from('perfis')
     .select('role')
     .eq('id', user.id)
     .single()
@@ -47,7 +47,7 @@ export const signUp = async (email: string, password: string, userData: any, rol
   if (data.user) {
     if (role === 'motorista') {
       const { error: profileError } = await supabase
-        .from('profiles')
+        .from('perfis')
         .insert({
           id: data.user.id,
           role: 'motorista',
