@@ -126,11 +126,9 @@ const CriarCupom = () => {
       setShowCompleteProfile(false)
       toast({
         title: "Perfil completado!",
-        description: "Agora criando seu cupom...",
+        description: "Agora você pode tentar criar o cupom novamente",
       })
       
-      // Após completar perfil, tentar criar o cupom automaticamente
-      await handleSubmit(new Event('submit') as any)
     } catch (error) {
       console.error('Erro ao completar perfil:', error)
       toast({

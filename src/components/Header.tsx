@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { signOut, getCurrentUser, UserWithRole } from '@/lib/auth'
-import { LogOut, Settings, Home, BarChart3 } from 'lucide-react'
+import { LogOut, Settings, Home, BarChart3, User } from 'lucide-react'
 
 const Header = () => {
   const [user, setUser] = useState<UserWithRole | null>(null)
@@ -88,6 +88,14 @@ const Header = () => {
               <span className="text-sm text-muted-foreground">
                 Olá, {user.email}
               </span>
+              {user.role === 'posto' && (
+                <Button variant="ghost" size="sm" asChild>
+                  <Link to="/posto/perfil" className="flex items-center space-x-2">
+                    <User className="h-4 w-4" />
+                    <span>Perfil</span>
+                  </Link>
+                </Button>
+              )}
               <Button variant="outline" size="sm" onClick={handleSignOut}>
                 <LogOut className="h-4 w-4 mr-2" />
                 Sair

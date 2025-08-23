@@ -1,10 +1,12 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Protected from "./components/Protected";
+import FuelPricesSidebar from "./components/FuelPricesSidebar";
 
 // Auth routes
 import SignIn from "./routes/auth/SignIn";
@@ -20,6 +22,7 @@ import Dashboard from "./routes/posto/Dashboard";
 import CriarCupom from "./routes/posto/CriarCupom";
 import GerenciarCupons from "./routes/posto/GerenciarCupons";
 import HistoricoCupons from "./routes/posto/HistoricoCupons";
+import Perfil from "./routes/posto/Perfil";
 
 import NotFound from "./pages/NotFound";
 
@@ -31,28 +34,38 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <div className="min-h-screen">
-          <Header />
-          <Routes>
-            {/* Public routes */}
-            <Route path="/entrar" element={<SignIn />} />
-            <Route path="/cadastro/motorista" element={<SignUpMotorista />} />
-            <Route path="/cadastro/posto" element={<SignUpPosto />} />
+        <SidebarProvider>
+          <div className="min-h-screen flex w-full">
+            {/* Sidebar só aparece nas rotas do posto */}
+            <Routes>
+              <Route path="/posto*" element={<FuelPricesSidebar />} />
+            </Routes>
             
-            {/* Motorista routes */}
-            <Route path="/" element={<Protected><Home /></Protected>} />
-            <Route path="/cupom/:id" element={<Protected><Cupom /></Protected>} />
-            
-            {/* Posto routes */}
-            <Route path="/posto" element={<Protected roleRequired="posto"><Dashboard /></Protected>} />
-            <Route path="/posto/novo" element={<Protected roleRequired="posto"><CriarCupom /></Protected>} />
-            <Route path="/posto/gerenciar" element={<Protected roleRequired="posto"><GerenciarCupons /></Protected>} />
-            <Route path="/posto/historico" element={<Protected roleRequired="posto"><HistoricoCupons /></Protected>} />
-            
-            {/* Catch-all route */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </div>
+            <div className="flex-1 flex flex-col">
+              <Header />
+              <Routes>
+                {/* Public routes */}
+                <Route path="/entrar" element={<SignIn />} />
+                <Route path="/cadastro/motorista" element={<SignUpMotorista />} />
+                <Route path="/cadastro/posto" element={<SignUpPosto />} />
+                
+                {/* Motorista routes */}
+                <Route path="/" element={<Protected><Home /></Protected>} />
+                <Route path="/cupom/:id" element={<Protected><Cupom /></Protected>} />
+                
+                {/* Posto routes */}
+                <Route path="/posto" element={<Protected roleRequired="posto"><Dashboard /></Protected>} />
+                <Route path="/posto/novo" element={<Protected roleRequired="posto"><CriarCupom /></Protected>} />
+                <Route path="/posto/gerenciar" element={<Protected roleRequired="posto"><GerenciarCupons /></Protected>} />
+                <Route path="/posto/historico" element={<Protected roleRequired="posto"><HistoricoCupons /></Protected>} />
+                <Route path="/posto/perfil" element={<Protected roleRequired="posto"><Perfil /></Protected>} />
+                
+                {/* Catch-all route */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </div>
+          </div>
+        </SidebarProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
