@@ -356,6 +356,44 @@ export type Database = {
         }
         Relationships: []
       }
+      preco_combustiveis: {
+        Row: {
+          ativo: boolean
+          combustivel: string
+          created_at: string
+          id: string
+          posto_id: string
+          preco: number
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          combustivel: string
+          created_at?: string
+          id?: string
+          posto_id: string
+          preco: number
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          combustivel?: string
+          created_at?: string
+          id?: string
+          posto_id?: string
+          preco?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "preco_combustiveis_posto_id_fkey"
+            columns: ["posto_id"]
+            isOneToOne: false
+            referencedRelation: "postos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           address: string | null
@@ -627,7 +665,7 @@ export type Database = {
             foreignKeyName: "uso_cupons_motorista_id_fkey"
             columns: ["motorista_id"]
             isOneToOne: false
-            referencedRelation: "profiles"
+            referencedRelation: "perfis"
             referencedColumns: ["id"]
           },
         ]
