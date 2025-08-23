@@ -90,28 +90,7 @@ const CriarCupom = () => {
     'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'
   ]
 
-  useEffect(() => {
-    const checkPostoStatus = async () => {
-      try {
-        const user = await getCurrentUser()
-        if (!user) return
-
-        const { data: posto } = await supabase
-          .from('postos')
-          .select('status')
-          .eq('id', user.id)
-          .single()
-
-        if (posto?.status === 'incomplete') {
-          setShowCompleteProfile(true)
-        }
-      } catch (error) {
-        console.error('Erro ao verificar status do posto:', error)
-      }
-    }
-
-    checkPostoStatus()
-  }, [])
+  // Removido useEffect - agora a validação só acontece no submit
 
   const handleInputChange = (field: keyof FormData, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }))
@@ -147,8 +126,11 @@ const CriarCupom = () => {
       setShowCompleteProfile(false)
       toast({
         title: "Perfil completado!",
-        description: "Agora você pode criar cupons",
+        description: "Agora criando seu cupom...",
       })
+      
+      // Após completar perfil, tentar criar o cupom automaticamente
+      await handleSubmit(new Event('submit') as any)
     } catch (error) {
       console.error('Erro ao completar perfil:', error)
       toast({
@@ -159,6 +141,36 @@ const CriarCupom = () => {
     } finally {
       setCompletingProfile(false)
     }
+  }
+
+  const checkProfileComplete = async (user: any) => {
+    const { data: posto } = await supabase
+      .from('postos')
+      .select('nome_fantasia, cnpj, email, telefone, bandeira, endereco, lat, lng')
+      .eq('id', user.id)
+      .single()
+    
+    if (!posto) return false
+    
+    const requiredFields = [
+      posto.nome_fantasia,
+      posto.cnpj,
+      posto.email,
+      posto.telefone,
+      posto.bandeira,
+      posto.lat,
+      posto.lng
+    ]
+    
+    const addressComplete = posto.endereco && 
+      posto.endereco.cep &&
+      posto.endereco.logradouro &&
+      posto.endereco.numero &&
+      posto.endereco.bairro &&
+      posto.endereco.cidade &&
+      posto.endereco.uf
+    
+    return requiredFields.every(field => field) && addressComplete
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -176,7 +188,16 @@ const CriarCupom = () => {
         return
       }
 
-      // Validações
+      // Validar perfil do posto ANTES de criar o cupom
+      const profileComplete = await checkProfileComplete(user)
+      
+      if (!profileComplete) {
+        setLoading(false)
+        setShowCompleteProfile(true)
+        return
+      }
+
+      // Validações do formulário
       const gastoMinimo = parseFloat(formData.gasto_minimo)
       const descontoTotal = parseFloat(formData.desconto_total)
       const precoBase = parseFloat(formData.preco_base_litro)
@@ -375,7 +396,7 @@ const CriarCupom = () => {
                 ) : (
                   <>
                     <Plus className="h-4 w-4 mr-2" />
-                    Criar cupom
+                    Criar
                   </>
                 )}
               </Button>

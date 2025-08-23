@@ -137,7 +137,7 @@ const Dashboard = () => {
           <Button asChild>
             <Link to="/posto/novo" className="flex items-center gap-2">
               <Plus className="h-4 w-4" />
-              Criar cupom
+              Criar Cupom
             </Link>
           </Button>
         </div>
