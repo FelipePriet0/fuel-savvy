@@ -23,6 +23,9 @@ import HistoricoCupons from "./routes/posto/HistoricoCupons";
 import Perfil from "./routes/posto/Perfil";
 import Precos from "./routes/posto/Precos";
 
+// Layout
+import PostoLayout from "./components/PostoLayout";
+
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -48,12 +51,14 @@ const App = () => (
                 <Route path="/cupom/:id" element={<Protected><Cupom /></Protected>} />
                 
                 {/* Posto routes */}
-                <Route path="/posto" element={<Protected roleRequired="posto"><Dashboard /></Protected>} />
-                <Route path="/posto/novo" element={<Protected roleRequired="posto"><CriarCupom /></Protected>} />
-                <Route path="/posto/gerenciar" element={<Protected roleRequired="posto"><GerenciarCupons /></Protected>} />
-                <Route path="/posto/historico" element={<Protected roleRequired="posto"><HistoricoCupons /></Protected>} />
-                <Route path="/posto/perfil" element={<Protected roleRequired="posto"><Perfil /></Protected>} />
-                <Route path="/posto/precos" element={<Protected roleRequired="posto"><Precos /></Protected>} />
+                <Route path="/posto" element={<Protected roleRequired="posto"><PostoLayout /></Protected>}>
+                  <Route index element={<Dashboard />} />
+                  <Route path="novo" element={<CriarCupom />} />
+                  <Route path="gerenciar" element={<GerenciarCupons />} />
+                  <Route path="historico" element={<HistoricoCupons />} />
+                  <Route path="perfil" element={<Perfil />} />
+                  <Route path="precos" element={<Precos />} />
+                </Route>
                 
                 {/* Catch-all route */}
                 <Route path="*" element={<NotFound />} />
