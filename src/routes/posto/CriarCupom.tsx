@@ -1,25 +1,30 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { format } from 'date-fns'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Checkbox } from '@/components/ui/checkbox'
+import { Calendar } from '@/components/ui/calendar'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { supabase } from '@/lib/supabaseClient'
 import { getCurrentUser } from '@/lib/auth'
-import { Loader2, Plus, MapPin, Building2, X } from 'lucide-react'
+import { Loader2, Plus, MapPin, Building2, X, CalendarIcon, Clock } from 'lucide-react'
 import { toast } from '@/hooks/use-toast'
+import { cn } from '@/lib/utils'
 
 interface FormData {
   nome_cupom: string
   combustiveis: string[]
   desconto_total: string
   gasto_minimo: string
-  validade_ini: string
-  validade_fim: string
-  ativo: boolean
+  validade_ini: Date | undefined
+  validade_fim: Date | undefined
+  hora_ini: string
+  hora_fim: string
 }
 
 interface EnderecoData {
@@ -44,9 +49,10 @@ const CriarCupom = () => {
     combustiveis: [],
     desconto_total: '',
     gasto_minimo: '',
-    validade_ini: '',
-    validade_fim: '',
-    ativo: true
+    validade_ini: undefined,
+    validade_fim: undefined,
+    hora_ini: '09:00',
+    hora_fim: '18:00'
   })
   const [loading, setLoading] = useState(false)
   const [showCompleteProfile, setShowCompleteProfile] = useState(false)
@@ -119,7 +125,7 @@ const CriarCupom = () => {
     navigate(-1)
   }
 
-  const handleInputChange = (field: keyof FormData, value: string | boolean | string[]) => {
+  const handleInputChange = (field: keyof FormData, value: string | boolean | string[] | Date | undefined) => {
     setFormData(prev => ({ ...prev, [field]: value }))
   }
 
@@ -271,10 +277,28 @@ const CriarCupom = () => {
         return
       }
 
-      if (new Date(formData.validade_ini) >= new Date(formData.validade_fim)) {
+      if (!formData.validade_ini || !formData.validade_fim) {
         toast({
           title: "Erro",
-          description: "Data de início deve ser anterior à data de fim",
+          description: "Selecione as datas de validade",
+          variant: "destructive"
+        })
+        return
+      }
+
+      // Combinar data e hora para criar datetime completo
+      const dataIni = new Date(formData.validade_ini)
+      const [horaIni, minutoIni] = formData.hora_ini.split(':')
+      dataIni.setHours(parseInt(horaIni), parseInt(minutoIni))
+      
+      const dataFim = new Date(formData.validade_fim)
+      const [horaFim, minutoFim] = formData.hora_fim.split(':')
+      dataFim.setHours(parseInt(horaFim), parseInt(minutoFim))
+
+      if (dataIni >= dataFim) {
+        toast({
+          title: "Erro",
+          description: "Data e hora de início deve ser anterior à data e hora de fim",
           variant: "destructive"
         })
         return
@@ -288,9 +312,9 @@ const CriarCupom = () => {
         desconto_total: descontoTotal,
         gasto_minimo: gastoMinimo,
         valor_texto: formData.nome_cupom,
-        validade_ini: new Date(formData.validade_ini).toISOString(),
-        validade_fim: new Date(formData.validade_fim).toISOString(),
-        ativo: formData.ativo
+        validade_ini: dataIni.toISOString(),
+        validade_fim: dataFim.toISOString(),
+        ativo: true // Sempre ativo ao criar
       }))
 
       const { error } = await supabase
@@ -407,38 +431,89 @@ const CriarCupom = () => {
 
 
               {/* Período de validade */}
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="validade_ini">Válido de</Label>
-                  <Input
-                    id="validade_ini"
-                    type="datetime-local"
-                    value={formData.validade_ini}
-                    onChange={(e) => handleInputChange('validade_ini', e.target.value)}
-                    required
-                  />
-                </div>
+              <div className="space-y-4">
+                <Label>Período de Validade</Label>
+                <div className="grid grid-cols-2 gap-4">
+                  {/* Data e hora de início */}
+                  <div className="space-y-3">
+                    <Label>Válido de</Label>
+                    <div className="space-y-2">
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className={cn(
+                              "w-full justify-start text-left font-normal",
+                              !formData.validade_ini && "text-muted-foreground"
+                            )}
+                          >
+                            <CalendarIcon className="mr-2 h-4 w-4" />
+                            {formData.validade_ini ? format(formData.validade_ini, "dd/MM/yyyy") : "Selecionar data"}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            mode="single"
+                            selected={formData.validade_ini}
+                            onSelect={(date) => handleInputChange('validade_ini', date)}
+                            initialFocus
+                            className="pointer-events-auto"
+                            disabled={(date) => date < new Date()}
+                          />
+                        </PopoverContent>
+                      </Popover>
+                      <div className="flex items-center space-x-2">
+                        <Clock className="h-4 w-4 text-muted-foreground" />
+                        <Input
+                          type="time"
+                          value={formData.hora_ini}
+                          onChange={(e) => handleInputChange('hora_ini', e.target.value)}
+                          className="w-full"
+                        />
+                      </div>
+                    </div>
+                  </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="validade_fim">Válido até</Label>
-                  <Input
-                    id="validade_fim"
-                    type="datetime-local"
-                    value={formData.validade_fim}
-                    onChange={(e) => handleInputChange('validade_fim', e.target.value)}
-                    required
-                  />
+                  {/* Data e hora de fim */}
+                  <div className="space-y-3">
+                    <Label>Válido até</Label>
+                    <div className="space-y-2">
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className={cn(
+                              "w-full justify-start text-left font-normal",
+                              !formData.validade_fim && "text-muted-foreground"
+                            )}
+                          >
+                            <CalendarIcon className="mr-2 h-4 w-4" />
+                            {formData.validade_fim ? format(formData.validade_fim, "dd/MM/yyyy") : "Selecionar data"}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            mode="single"
+                            selected={formData.validade_fim}
+                            onSelect={(date) => handleInputChange('validade_fim', date)}
+                            initialFocus
+                            className="pointer-events-auto"
+                            disabled={(date) => date < new Date()}
+                          />
+                        </PopoverContent>
+                      </Popover>
+                      <div className="flex items-center space-x-2">
+                        <Clock className="h-4 w-4 text-muted-foreground" />
+                        <Input
+                          type="time"
+                          value={formData.hora_fim}
+                          onChange={(e) => handleInputChange('hora_fim', e.target.value)}
+                          className="w-full"
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-
-              {/* Ativo */}
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="ativo"
-                  checked={formData.ativo}
-                  onCheckedChange={(checked) => handleInputChange('ativo', !!checked)}
-                />
-                <Label htmlFor="ativo">Cupom ativo</Label>
               </div>
 
               {/* Botão de submit */}
