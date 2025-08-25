@@ -19,8 +19,8 @@ import {
 interface DashboardStats {
   cuponsAtivos: number
   cuponsExpirados: number
-  usos7dias: number
-  usos30dias: number
+  resgates7dias: number
+  resgates30dias: number
 }
 
 interface CupomRecente {
@@ -64,15 +64,15 @@ const Dashboard = () => {
           .eq('posto_id', user.id)
           .lt('validade_fim', now)
 
-        // Usos últimos 7 dias
-        const { count: usos7dias } = await supabase
+        // Resgates últimos 7 dias
+        const { count: resgates7dias } = await supabase
           .from('uso_cupons')
           .select('cupom_id, cupons!inner(*)', { count: 'exact', head: true })
           .eq('cupons.posto_id', user.id)
           .gte('usado_em', sevenDaysAgo)
 
-        // Usos últimos 30 dias
-        const { count: usos30dias } = await supabase
+        // Resgates últimos 30 dias
+        const { count: resgates30dias } = await supabase
           .from('uso_cupons')
           .select('cupom_id, cupons!inner(*)', { count: 'exact', head: true })
           .eq('cupons.posto_id', user.id)
@@ -89,8 +89,8 @@ const Dashboard = () => {
         setStats({
           cuponsAtivos: cuponsAtivos || 0,
           cuponsExpirados: cuponsExpirados || 0,
-          usos7dias: usos7dias || 0,
-          usos30dias: usos30dias || 0
+          resgates7dias: resgates7dias || 0,
+          resgates30dias: resgates30dias || 0
         })
 
         setCuponsRecentes(cupons || [])
@@ -157,14 +157,14 @@ const Dashboard = () => {
             icon={Clock}
           />
           <StatCard
-            title="Usos (7 dias)"
-            value={stats?.usos7dias || 0}
+            title="Resgates (7 dias)"
+            value={stats?.resgates7dias || 0}
             subtitle="Última semana"
             icon={TrendingUp}
           />
           <StatCard
-            title="Usos (30 dias)"
-            value={stats?.usos30dias || 0}
+            title="Resgates (30 dias)"
+            value={stats?.resgates30dias || 0}
             subtitle="Último mês"
             icon={Calendar}
           />
