@@ -8,7 +8,7 @@ import { supabase } from '@/lib/supabaseClient'
 import { getCurrentUser } from '@/lib/auth'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Separator } from '@/components/ui/separator'
-import { User, Building2, Mail, Phone, MapPin, Upload, Loader2 } from 'lucide-react'
+import { User, Building2, Mail, Phone, MapPin, Upload, Loader2, Lock, Eye, EyeOff } from 'lucide-react'
 import { toast } from '@/hooks/use-toast'
 
 interface PostoProfile {
@@ -52,6 +52,15 @@ export default function Perfil() {
   const [saving, setSaving] = useState(false)
   const [logoFile, setLogoFile] = useState<File | null>(null)
   const [logoUrl, setLogoUrl] = useState<string>('')
+  
+  // Estados para alterar senha
+  const [currentPassword, setCurrentPassword] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [changingPassword, setChangingPassword] = useState(false)
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false)
+  const [showNewPassword, setShowNewPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   useEffect(() => {
     fetchProfile()
@@ -218,6 +227,78 @@ export default function Perfil() {
       })
     } finally {
       setSaving(false)
+    }
+  }
+
+  const handlePasswordChange = async (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    // Validações
+    if (newPassword.length < 6) {
+      toast({
+        title: "Erro",
+        description: "A nova senha deve ter no mínimo 6 caracteres",
+        variant: "destructive"
+      })
+      return
+    }
+
+    if (newPassword !== confirmPassword) {
+      toast({
+        title: "Erro", 
+        description: "A confirmação da senha não confere",
+        variant: "destructive"
+      })
+      return
+    }
+
+    setChangingPassword(true)
+
+    try {
+      // Primeiro, fazer login novamente para validar a senha atual
+      const user = await getCurrentUser()
+      if (!user?.email) throw new Error('Usuário não encontrado')
+
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: user.email,
+        password: currentPassword
+      })
+
+      if (signInError) {
+        toast({
+          title: "Erro",
+          description: "Senha atual incorreta",
+          variant: "destructive"
+        })
+        return
+      }
+
+      // Atualizar senha
+      const { error: updateError } = await supabase.auth.updateUser({
+        password: newPassword
+      })
+
+      if (updateError) throw updateError
+
+      // Limpar campos
+      setCurrentPassword('')
+      setNewPassword('')
+      setConfirmPassword('')
+
+      toast({
+        title: "Sucesso",
+        description: "Senha alterada com sucesso!",
+      })
+
+    } catch (error) {
+      console.error('Erro ao alterar senha:', error)
+      toast({
+        title: "Erro",
+        description: "Não foi possível alterar a senha",
+        variant: "destructive"
+      })
+    } finally {
+      setChangingPassword(false)
     }
   }
 
@@ -488,6 +569,125 @@ export default function Perfil() {
                   <>
                     <User className="h-4 w-4 mr-2" />
                     Salvar Perfil
+                  </>
+                )}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+
+        {/* Seção Alterar Senha */}
+        <Card className="bg-gradient-surface border-zup-border mt-6">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Lock className="h-5 w-5 text-primary" />
+              Alterar Senha
+            </CardTitle>
+            <p className="text-sm text-muted-foreground">
+              Mantenha sua conta segura com uma senha forte
+            </p>
+          </CardHeader>
+
+          <CardContent>
+            <form onSubmit={handlePasswordChange} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="currentPassword">Senha Atual *</Label>
+                <div className="relative">
+                  <Input
+                    id="currentPassword"
+                    type={showCurrentPassword ? "text" : "password"}
+                    placeholder="Digite sua senha atual"
+                    value={currentPassword}
+                    onChange={(e) => setCurrentPassword(e.target.value)}
+                    className="pr-10"
+                    required
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                    onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                  >
+                    {showCurrentPassword ? (
+                      <EyeOff className="h-4 w-4 text-muted-foreground" />
+                    ) : (
+                      <Eye className="h-4 w-4 text-muted-foreground" />
+                    )}
+                  </Button>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="newPassword">Nova Senha *</Label>
+                <div className="relative">
+                  <Input
+                    id="newPassword"
+                    type={showNewPassword ? "text" : "password"}
+                    placeholder="Digite a nova senha"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    className="pr-10"
+                    required
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                    onClick={() => setShowNewPassword(!showNewPassword)}
+                  >
+                    {showNewPassword ? (
+                      <EyeOff className="h-4 w-4 text-muted-foreground" />
+                    ) : (
+                      <Eye className="h-4 w-4 text-muted-foreground" />
+                    )}
+                  </Button>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="confirmPassword">Confirmar Nova Senha *</Label>
+                <div className="relative">
+                  <Input
+                    id="confirmPassword"
+                    type={showConfirmPassword ? "text" : "password"}
+                    placeholder="Confirme a nova senha"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className="pr-10"
+                    required
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  >
+                    {showConfirmPassword ? (
+                      <EyeOff className="h-4 w-4 text-muted-foreground" />
+                    ) : (
+                      <Eye className="h-4 w-4 text-muted-foreground" />
+                    )}
+                  </Button>
+                </div>
+              </div>
+
+              <Button 
+                type="submit" 
+                className="w-full bg-green-600 hover:bg-green-700 text-white" 
+                disabled={changingPassword}
+              >
+                {changingPassword ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                    Alterando...
+                  </>
+                ) : (
+                  <>
+                    <Lock className="h-4 w-4 mr-2" />
+                    Atualizar Senha
                   </>
                 )}
               </Button>
