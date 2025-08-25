@@ -9,7 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { supabase } from '@/lib/supabaseClient'
 import { getCurrentUser } from '@/lib/auth'
-import { Loader2, Plus, MapPin, Building2 } from 'lucide-react'
+import { Loader2, Plus, MapPin, Building2, X } from 'lucide-react'
 import { toast } from '@/hooks/use-toast'
 
 interface FormData {
@@ -91,6 +91,10 @@ const CriarCupom = () => {
   ]
 
   // Removido useEffect - agora a validação só acontece no submit
+
+  const handleClose = () => {
+    navigate(-1)
+  }
 
   const handleInputChange = (field: keyof FormData, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }))
@@ -266,10 +270,20 @@ const CriarCupom = () => {
       <div className="container py-8 max-w-2xl">
         <Card className="bg-gradient-surface border-zup-border">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Plus className="h-5 w-5 text-primary" />
-              Criar Novo Cupom
-            </CardTitle>
+            <div className="flex items-center justify-between">
+              <CardTitle className="flex items-center gap-2">
+                <Plus className="h-5 w-5 text-primary" />
+                Criar Novo Cupom
+              </CardTitle>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleClose}
+                className="h-8 w-8 text-muted-foreground hover:text-foreground"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
           </CardHeader>
 
           <CardContent>
