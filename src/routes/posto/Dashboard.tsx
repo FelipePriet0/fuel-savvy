@@ -327,7 +327,7 @@ const Dashboard = () => {
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="resumo">Visão Geral</TabsTrigger>
-                <TabsTrigger value="gerenciar">Gerenciar Todos</TabsTrigger>
+                <TabsTrigger value="gerenciar">Gerenciar Todos Cupons</TabsTrigger>
               </TabsList>
               
               <TabsContent value="resumo" className="mt-6">
