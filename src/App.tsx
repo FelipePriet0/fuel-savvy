@@ -47,7 +47,7 @@ const App = () => (
                 <Route path="/cadastro/posto" element={<SignUpPosto />} />
                 
                 {/* Motorista routes */}
-                <Route path="/" element={<Protected><Home /></Protected>} />
+                <Route path="/" element={<Protected roleRequired="motorista"><Home /></Protected>} />
                 <Route path="/cupom/:id" element={<Protected><Cupom /></Protected>} />
                 
                 {/* Posto routes */}

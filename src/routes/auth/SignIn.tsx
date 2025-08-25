@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { signIn } from '@/lib/auth'
+import { signIn, getCurrentUser } from '@/lib/auth'
 import { Loader2, Mail, Lock, Fuel } from 'lucide-react'
 
 const SignIn = () => {
@@ -21,7 +21,18 @@ const SignIn = () => {
 
     try {
       await signIn(email, password)
-      navigate('/')
+      
+      // Obter usuário e redirecionar baseado no role
+      const user = await getCurrentUser()
+      console.log('🔄 Redirecionando usuário:', user?.email, 'Role:', user?.role)
+      
+      if (user?.role === 'posto') {
+        console.log('➡️ Redirecionando posto para /posto')
+        navigate('/posto')
+      } else {
+        console.log('➡️ Redirecionando motorista para /')
+        navigate('/')
+      }
     } catch (error: any) {
       setError(error.message || 'Erro ao fazer login')
     } finally {
