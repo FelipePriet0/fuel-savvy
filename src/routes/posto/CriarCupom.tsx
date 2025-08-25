@@ -13,14 +13,13 @@ import { Loader2, Plus, MapPin, Building2, X } from 'lucide-react'
 import { toast } from '@/hooks/use-toast'
 
 interface FormData {
-  combustivel: string
-  preco_base_litro: string
+  nome_cupom: string
+  combustiveis: string[]
   desconto_total: string
   gasto_minimo: string
   validade_ini: string
   validade_fim: string
   ativo: boolean
-  valor_texto: string
 }
 
 interface EnderecoData {
@@ -41,14 +40,13 @@ interface PostoCompleto {
 
 const CriarCupom = () => {
   const [formData, setFormData] = useState<FormData>({
-    combustivel: '',
-    preco_base_litro: '',
+    nome_cupom: '',
+    combustiveis: [],
     desconto_total: '',
     gasto_minimo: '',
     validade_ini: '',
     validade_fim: '',
-    ativo: true,
-    valor_texto: ''
+    ativo: true
   })
   const [loading, setLoading] = useState(false)
   const [showCompleteProfile, setShowCompleteProfile] = useState(false)
@@ -66,16 +64,19 @@ const CriarCupom = () => {
     lng: ''
   })
   const [completingProfile, setCompletingProfile] = useState(false)
+  const [bandeiraPosto, setBandeiraPosto] = useState('')
   const navigate = useNavigate()
 
-  const combustiveis = [
-    'Gasolina Comum',
-    'Gasolina Aditivada',
-    'Etanol',
-    'Diesel',
-    'Diesel S-10',
-    'GNV'
-  ]
+  // Combustíveis por bandeira
+  const getCombustiveis = (bandeira: string) => {
+    const combusiveisPorBandeira = {
+      'Petrobras': ['Gasolina Comum', 'Gasolina Aditivada Podium', 'Etanol', 'Diesel', 'Diesel S-10', 'GNV'],
+      'Ipiranga': ['Gasolina Comum', 'Gasolina Ipimax', 'Etanol', 'Diesel', 'Diesel S-10', 'GNV'],
+      'Shell': ['Gasolina Comum', 'Shell V-Power', 'Etanol', 'Diesel', 'Diesel S-10', 'GNV'],
+      'Branca': ['Gasolina Comum', 'Gasolina Aditivada', 'Etanol', 'Diesel', 'Diesel S-10', 'GNV']
+    }
+    return combusiveisPorBandeira[bandeira as keyof typeof combusiveisPorBandeira] || combusiveisPorBandeira['Branca']
+  }
 
   const bandeiras = [
     'Petrobras',
@@ -90,14 +91,45 @@ const CriarCupom = () => {
     'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'
   ]
 
-  // Removido useEffect - agora a validação só acontece no submit
+  // Buscar bandeira do posto ao carregar
+  useEffect(() => {
+    const fetchBandeiraPosto = async () => {
+      try {
+        const user = await getCurrentUser()
+        if (!user) return
+
+        const { data: posto } = await supabase
+          .from('postos')
+          .select('bandeira')
+          .eq('id', user.id)
+          .single()
+        
+        if (posto?.bandeira) {
+          setBandeiraPosto(posto.bandeira)
+        }
+      } catch (error) {
+        console.error('Erro ao buscar bandeira do posto:', error)
+      }
+    }
+
+    fetchBandeiraPosto()
+  }, [])
 
   const handleClose = () => {
     navigate(-1)
   }
 
-  const handleInputChange = (field: keyof FormData, value: string | boolean) => {
+  const handleInputChange = (field: keyof FormData, value: string | boolean | string[]) => {
     setFormData(prev => ({ ...prev, [field]: value }))
+  }
+
+  const handleCombustivelToggle = (combustivel: string) => {
+    setFormData(prev => ({
+      ...prev,
+      combustiveis: prev.combustiveis.includes(combustivel) 
+        ? prev.combustiveis.filter(c => c !== combustivel)
+        : [...prev.combustiveis, combustivel]
+    }))
   }
 
   const handleEnderecoChange = (field: keyof EnderecoData, value: string) => {
@@ -200,9 +232,26 @@ const CriarCupom = () => {
       }
 
       // Validações do formulário
+      if (!formData.nome_cupom.trim()) {
+        toast({
+          title: "Erro",
+          description: "Nome do cupom é obrigatório",
+          variant: "destructive"
+        })
+        return
+      }
+
+      if (formData.combustiveis.length === 0) {
+        toast({
+          title: "Erro",
+          description: "Selecione pelo menos um tipo de combustível",
+          variant: "destructive"
+        })
+        return
+      }
+
       const gastoMinimo = parseFloat(formData.gasto_minimo)
       const descontoTotal = parseFloat(formData.desconto_total)
-      const precoBase = parseFloat(formData.preco_base_litro)
 
       if (gastoMinimo <= 0) {
         toast({
@@ -231,19 +280,22 @@ const CriarCupom = () => {
         return
       }
 
+      // Criar um cupom para cada combustível selecionado
+      const cuponsData = formData.combustiveis.map(combustivel => ({
+        posto_id: user.id,
+        combustivel: combustivel,
+        preco_base_litro: 0, // Não será usado, mas é obrigatório no banco
+        desconto_total: descontoTotal,
+        gasto_minimo: gastoMinimo,
+        valor_texto: formData.nome_cupom,
+        validade_ini: new Date(formData.validade_ini).toISOString(),
+        validade_fim: new Date(formData.validade_fim).toISOString(),
+        ativo: formData.ativo
+      }))
+
       const { error } = await supabase
         .from('cupons')
-        .insert({
-          posto_id: user.id,
-          combustivel: formData.combustivel,
-          preco_base_litro: precoBase,
-          desconto_total: descontoTotal,
-          gasto_minimo: gastoMinimo,
-          valor_texto: formData.valor_texto,
-          validade_ini: new Date(formData.validade_ini).toISOString(),
-          validade_fim: new Date(formData.validade_fim).toISOString(),
-          ativo: formData.ativo
-        })
+        .insert(cuponsData)
 
       if (error) throw error
 
@@ -288,38 +340,40 @@ const CriarCupom = () => {
 
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Combustível */}
+              {/* Nome do cupom */}
               <div className="space-y-2">
-                <Label htmlFor="combustivel">Tipo de Combustível</Label>
-                <Select 
-                  value={formData.combustivel} 
-                  onValueChange={(value) => handleInputChange('combustivel', value)}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecione o combustível" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {combustiveis.map(combustivel => (
-                      <SelectItem key={combustivel} value={combustivel}>
-                        {combustivel}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Preço base */}
-              <div className="space-y-2">
-                <Label htmlFor="preco_base">Preço Base por Litro (R$)</Label>
+                <Label htmlFor="nome_cupom">Nome do Cupom</Label>
                 <Input
-                  id="preco_base"
-                  type="number"
-                  step="0.01"
-                  placeholder="6.00"
-                  value={formData.preco_base_litro}
-                  onChange={(e) => handleInputChange('preco_base_litro', e.target.value)}
+                  id="nome_cupom"
+                  placeholder="Ex: Promo R$10 Acima de R$100"
+                  value={formData.nome_cupom}
+                  onChange={(e) => handleInputChange('nome_cupom', e.target.value)}
                   required
                 />
+              </div>
+
+              {/* Tipos de Combustível */}
+              <div className="space-y-3">
+                <Label>Tipos de Combustível</Label>
+                <div className="grid grid-cols-2 gap-3">
+                  {getCombustiveis(bandeiraPosto).map(combustivel => (
+                    <div key={combustivel} className="flex items-center space-x-2">
+                      <Checkbox
+                        id={combustivel}
+                        checked={formData.combustiveis.includes(combustivel)}
+                        onCheckedChange={() => handleCombustivelToggle(combustivel)}
+                      />
+                      <Label htmlFor={combustivel} className="text-sm font-normal">
+                        {combustivel}
+                      </Label>
+                    </div>
+                  ))}
+                </div>
+                {formData.combustiveis.length > 0 && (
+                  <p className="text-sm text-muted-foreground">
+                    {formData.combustiveis.length} combustível(eis) selecionado(s)
+                  </p>
+                )}
               </div>
 
               {/* Desconto e gasto mínimo */}
@@ -351,22 +405,11 @@ const CriarCupom = () => {
                 </div>
               </div>
 
-              {/* Texto de exibição */}
-              <div className="space-y-2">
-                <Label htmlFor="valor_texto">Texto de Exibição</Label>
-                <Input
-                  id="valor_texto"
-                  placeholder="R$0,20/L ou R$10 no total"
-                  value={formData.valor_texto}
-                  onChange={(e) => handleInputChange('valor_texto', e.target.value)}
-                  required
-                />
-              </div>
 
               {/* Período de validade */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="validade_ini">Válido a partir de</Label>
+                  <Label htmlFor="validade_ini">Válido de</Label>
                   <Input
                     id="validade_ini"
                     type="datetime-local"
