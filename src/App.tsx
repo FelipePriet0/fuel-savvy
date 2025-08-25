@@ -6,8 +6,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Protected from "./components/Protected";
-import FuelPricesSidebar from "./components/FuelPricesSidebar";
-
 // Auth routes
 import SignIn from "./routes/auth/SignIn";
 import SignUpMotorista from "./routes/auth/SignUpMotorista";
@@ -23,6 +21,7 @@ import CriarCupom from "./routes/posto/CriarCupom";
 import GerenciarCupons from "./routes/posto/GerenciarCupons";
 import HistoricoCupons from "./routes/posto/HistoricoCupons";
 import Perfil from "./routes/posto/Perfil";
+import Precos from "./routes/posto/Precos";
 
 import NotFound from "./pages/NotFound";
 
@@ -36,11 +35,6 @@ const App = () => (
       <BrowserRouter>
         <SidebarProvider>
           <div className="min-h-screen flex w-full">
-            {/* Sidebar só aparece nas rotas do posto */}
-            <Routes>
-              <Route path="/posto*" element={<FuelPricesSidebar />} />
-            </Routes>
-            
             <div className="flex-1 flex flex-col">
               <Header />
               <Routes>
@@ -59,6 +53,7 @@ const App = () => (
                 <Route path="/posto/gerenciar" element={<Protected roleRequired="posto"><GerenciarCupons /></Protected>} />
                 <Route path="/posto/historico" element={<Protected roleRequired="posto"><HistoricoCupons /></Protected>} />
                 <Route path="/posto/perfil" element={<Protected roleRequired="posto"><Perfil /></Protected>} />
+                <Route path="/posto/precos" element={<Protected roleRequired="posto"><Precos /></Protected>} />
                 
                 {/* Catch-all route */}
                 <Route path="*" element={<NotFound />} />
