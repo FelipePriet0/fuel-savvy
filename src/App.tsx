@@ -18,7 +18,6 @@ import Cupom from "./routes/motorista/Cupom";
 // Posto routes
 import Dashboard from "./routes/posto/Dashboard";
 import CriarCupom from "./routes/posto/CriarCupom";
-import GerenciarCupons from "./routes/posto/GerenciarCupons";
 import HistoricoCupons from "./routes/posto/HistoricoCupons";
 import Perfil from "./routes/posto/Perfil";
 import Precos from "./routes/posto/Precos";
@@ -54,7 +53,6 @@ const App = () => (
                 <Route path="/posto" element={<Protected roleRequired="posto"><PostoLayout /></Protected>}>
                   <Route index element={<Dashboard />} />
                   <Route path="novo" element={<CriarCupom />} />
-                  <Route path="gerenciar" element={<GerenciarCupons />} />
                   <Route path="historico" element={<HistoricoCupons />} />
                   <Route path="perfil" element={<Perfil />} />
                   <Route path="precos" element={<Precos />} />

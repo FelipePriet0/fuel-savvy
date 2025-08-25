@@ -24,11 +24,6 @@ const sidebarNavItems = [
     icon: LayoutDashboard,
   },
   {
-    title: "Gerenciar Cupons",
-    href: "/posto/gerenciar",
-    icon: Settings,
-  },
-  {
     title: "Histórico",
     href: "/posto/historico",
     icon: History,
