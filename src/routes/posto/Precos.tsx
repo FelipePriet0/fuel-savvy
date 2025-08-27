@@ -166,7 +166,7 @@ export default function Precos() {
       </p>
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
         <DialogTrigger asChild>
-          <Button className="bg-green-600 hover:bg-green-700">
+          <Button>
             <Plus className="h-4 w-4 mr-2" />
             Adicionar Primeiro Preço
           </Button>
