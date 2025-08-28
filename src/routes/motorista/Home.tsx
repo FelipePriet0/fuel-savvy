@@ -112,7 +112,7 @@ const Home = () => {
         </div>
 
         {/* Card: Total economizado */}
-        <Card className="bg-white border-2 border-black rounded-lg" style={{ boxShadow: '0px 6px 0px black' }}>
+        <Card className="bg-white border-2 border-black rounded-lg" style={{ boxShadow: '0px 4px 0px black' }}>
           <CardContent className="p-6">
             <div className="flex items-center gap-4">
               <div className="p-3 bg-primary/10 rounded-lg">
