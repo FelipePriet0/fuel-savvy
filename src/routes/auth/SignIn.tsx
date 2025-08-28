@@ -105,18 +105,13 @@ const SignIn = () => {
             </Button>
           </form>
 
-          <div className="mt-6 space-y-3">
-            <div className="text-center text-sm text-muted-foreground">
+          <div className="mt-6 text-center">
+            <p className="text-sm text-muted-foreground mb-3">
               Não tem uma conta?
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              <Button variant="outline" size="sm" asChild>
-                <Link to="/cadastro/motorista">Sou Motorista</Link>
-              </Button>
-              <Button variant="outline" size="sm" asChild>
-                <Link to="/cadastro/posto">Sou Posto</Link>
-              </Button>
-            </div>
+            </p>
+            <Button variant="outline" asChild className="w-full">
+              <Link to="/signup">Criar conta</Link>
+            </Button>
           </div>
         </CardContent>
       </Card>
