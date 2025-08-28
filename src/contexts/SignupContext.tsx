@@ -16,7 +16,11 @@ export interface PostoData {
   nome_fantasia: string;
   email: string;
   telefone: string;
-  endereco: string;
+  cep: string;
+  rua: string;
+  numero: string;
+  bairro: string;
+  cidade: string;
   latitude?: number;
   longitude?: number;
   place_id?: string;
@@ -56,7 +60,11 @@ const initialPostoData: PostoData = {
   nome_fantasia: '',
   email: '',
   telefone: '',
-  endereco: '',
+  cep: '',
+  rua: '',
+  numero: '',
+  bairro: '',
+  cidade: '',
 };
 
 export const SignupProvider = ({ children }: { children: ReactNode }) => {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, MapPin } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -63,9 +63,6 @@ export default function PostoStep1() {
       newErrors.telefone = 'Telefone é obrigatório';
     }
 
-    if (!postoData.endereco.trim()) {
-      newErrors.endereco = 'Endereço é obrigatório';
-    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -80,10 +77,6 @@ export default function PostoStep1() {
     navigate('/signup/step2');
   };
 
-  const handleLocationClick = () => {
-    // TODO: Implementar seletor de localização com mapa
-    console.log('Abrir seletor de localização');
-  };
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
@@ -175,33 +168,6 @@ export default function PostoStep1() {
               )}
             </div>
 
-            {/* Endereço */}
-            <div>
-              <Label htmlFor="endereco">Endereço</Label>
-              <div className="relative">
-                <Input
-                  id="endereco"
-                  type="text"
-                  value={postoData.endereco}
-                  onChange={(e) => handleInputChange('endereco', e.target.value)}
-                  placeholder="Rua, número, bairro, cidade"
-                  className={errors.endereco ? 'border-destructive pr-10' : 'pr-10'}
-                />
-                <button
-                  type="button"
-                  onClick={handleLocationClick}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary"
-                >
-                  <MapPin className="w-4 h-4" />
-                </button>
-              </div>
-              {errors.endereco && (
-                <p className="text-sm text-destructive mt-1">{errors.endereco}</p>
-              )}
-              <p className="text-xs text-muted-foreground mt-1">
-                Clique no ícone do mapa para selecionar a localização exata
-              </p>
-            </div>
 
             <Button type="submit" className="w-full">
               Continuar

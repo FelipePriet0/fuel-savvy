@@ -116,3 +116,16 @@ export const maskPhone = (value: string): string => {
     .replace(/(\d{2})(\d)/, '($1) $2')
     .replace(/(\d{5})(\d{1,4})/, '$1-$2');
 };
+
+export const maskCEP = (value: string): string => {
+  const cleaned = value.replace(/\D/g, '');
+  return cleaned
+    .slice(0, 8)
+    .replace(/(\d{5})(\d{1,3})/, '$1-$2');
+};
+
+// Validação de CEP
+export const validateCEP = (cep: string): boolean => {
+  const cleanCEP = cep.replace(/\D/g, '');
+  return cleanCEP.length === 8;
+};
