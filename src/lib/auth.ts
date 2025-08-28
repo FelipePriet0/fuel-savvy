@@ -24,8 +24,8 @@ export const getCurrentUser = async (): Promise<UserWithRole | null> => {
       .eq('id', user.id)
       .maybeSingle(),
     supabase
-      .from('stations')
-      .select('*')
+      .from('postos')
+      .select('role')
       .eq('id', user.id)
       .maybeSingle()
   ])
@@ -40,10 +40,10 @@ export const getCurrentUser = async (): Promise<UserWithRole | null> => {
     return { ...user, role: posto.role as UserRole }
   }
 
-  // Se encontrou em stations, retornar como posto
+  // Se encontrou em postos, retornar como posto
   if (posto) {
     console.log('✅ Usuário identificado como posto')
-    return { ...user, role: 'posto' as UserRole }
+    return { ...user, role: posto.role as UserRole }
   }
 
   // Se encontrou em perfis, retornar como motorista
@@ -90,12 +90,18 @@ export const signUp = async (email: string, password: string, userData: any, rol
         console.log('✅ Perfil de motorista criado com sucesso')
         
       } else if (role === 'posto') {
-        console.log('🏭 Inserindo dados na tabela stations...')
+        console.log('🏭 Inserindo dados na tabela postos...')
         const { error: postoError } = await supabase
-          .from('stations')
+          .from('postos')
           .insert({
             id: data.user.id,
-            ...userData
+            cnpj: userData.cnpj,
+            nome_fantasia: userData.nomeFantasia || userData.nome_fantasia,
+            email: userData.email,
+            telefone: userData.telefone,
+            endereco: userData.endereco,
+            bandeira: userData.bandeira,
+            role: 'posto'
           })
 
         if (postoError) {
