@@ -1,213 +1,234 @@
-import { FuelCard } from '@/components/FuelCard'
-import { ActionCard } from '@/components/ActionCard'
-import { StationCard } from '@/components/StationCard'
+import { BrutalStationCard, BrutalProcessCard, BrutalServiceCard } from '@/components/BrutalCard'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { 
   Fuel, 
   Zap, 
   Truck, 
-  TrendingUp, 
-  Gift, 
-  MapPin, 
-  Users,
   Search,
-  ArrowRight
+  MapPin,
+  Target,
+  Ticket,
+  Star,
+  DollarSign,
+  Droplets,
+  Car,
+  Wrench,
+  ShoppingCart,
+  Gauge
 } from 'lucide-react'
 
 const Index = () => {
-  const fuelTypes = [
-    {
-      title: "Gasolina",
-      description: "Combustível mais popular para carros de passeio",
-      icon: <Fuel className="w-8 h-8 text-primary" />,
-      badge: "Mais Popular"
+  const processSteps = [
+    { 
+      number: "1", 
+      title: "LOCALIZE", 
+      description: "Encontre postos próximos a você",
+      icon: <MapPin className="w-full h-full stroke-2" />
     },
-    {
-      title: "Etanol",
-      description: "Opção sustentável e econômica",
-      icon: <Zap className="w-8 h-8 text-primary" />,
-      badge: "Eco-Friendly"
+    { 
+      number: "2", 
+      title: "RESGATE", 
+      description: "Pegue seu cupom de desconto",
+      icon: <Ticket className="w-full h-full stroke-2" />
     },
-    {
-      title: "Diesel",
-      description: "Ideal para veículos pesados e caminhões",
-      icon: <Truck className="w-8 h-8 text-primary" />,
-      badge: "Profissional"
+    { 
+      number: "3", 
+      title: "ABASTEÇA", 
+      description: "Vá até o posto e abasteça",
+      icon: <Fuel className="w-full h-full stroke-2" />
+    },
+    { 
+      number: "4", 
+      title: "ECONOMIZE", 
+      description: "Pague menos e economize",
+      icon: <DollarSign className="w-full h-full stroke-2" />
     }
   ]
 
-  const actions = [
+  const stations = [
     {
-      title: "Tendências",
-      subtitle: "Preços em alta",
-      icon: <TrendingUp className="w-full h-full" />
-    },
-    {
-      title: "Promoções",
-      subtitle: "Ofertas especiais",
-      icon: <Gift className="w-full h-full" />
-    },
-    {
-      title: "Próximos",
-      subtitle: "Postos perto de você",
-      icon: <MapPin className="w-full h-full" />
-    },
-    {
-      title: "Comunidade",
-      subtitle: "Avaliações dos usuários",
-      icon: <Users className="w-full h-full" />
-    }
-  ]
-
-  const steps = [
-    { number: "1", title: "Encontre", description: "Localize postos próximos" },
-    { number: "2", title: "Compare", description: "Veja preços e promoções" },
-    { number: "3", title: "Economize", description: "Use cupons de desconto" },
-    { number: "4", title: "Avalie", description: "Compartilhe sua experiência" }
-  ]
-
-  const bestStations = [
-    {
-      name: "Posto Shell Centro",
-      address: "Av. Principal, 123 - Centro",
-      rating: 4.8,
-      totalRatings: 127,
-      fuelPrice: 5.49,
-      fuelType: "Gasolina",
+      name: "Shell Centro",
+      address: "Av. Paulista, 1000",
+      price: 5.49,
+      fuelType: "GASOLINA",
       discount: 15,
-      distance: "2.1 km"
+      rating: 4.9
     },
     {
-      name: "Ipiranga Bela Vista",
-      address: "R. das Flores, 456 - Bela Vista", 
-      rating: 4.6,
-      totalRatings: 89,
-      fuelPrice: 5.39,
-      fuelType: "Gasolina",
-      discount: 10,
-      distance: "3.5 km"
+      name: "Ipiranga Vila Olímpia",
+      address: "R. Funchal, 500",
+      price: 5.39,
+      fuelType: "GASOLINA", 
+      discount: 12,
+      rating: 4.7
+    },
+    {
+      name: "BR Jardins",
+      address: "Av. Brigadeiro Faria Lima, 2000",
+      price: 5.59,
+      fuelType: "GASOLINA",
+      discount: 8,
+      rating: 4.8
     }
+  ]
+
+  const services = [
+    { title: "GASOLINA", icon: <Fuel className="w-full h-full stroke-2" />, badge: "Mais Popular" },
+    { title: "ETANOL", icon: <Zap className="w-full h-full stroke-2" />, badge: "Eco-Friendly" },
+    { title: "DIESEL", icon: <Truck className="w-full h-full stroke-2" />, badge: "Profissional" },
+    { title: "ADITIVADOS", icon: <Droplets className="w-full h-full stroke-2" /> },
+    { title: "LAVAGEM", icon: <Car className="w-full h-full stroke-2" /> },
+    { title: "TROCA DE ÓLEO", icon: <Wrench className="w-full h-full stroke-2" /> },
+    { title: "CONVENIÊNCIA", icon: <ShoppingCart className="w-full h-full stroke-2" /> },
+    { title: "CALIBRAGEM", icon: <Gauge className="w-full h-full stroke-2" /> }
   ]
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="bg-card border-b border-border">
+      <header className="bg-white border-b-4 border-black">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-                <Fuel className="w-5 h-5 text-primary-foreground" />
-              </div>
-              <h1 className="text-xl font-bold text-foreground">Zup Gás</h1>
+            <h1 className="text-3xl font-black text-black">ZUP</h1>
+            <div className="flex space-x-4">
+              <Button className="bg-white text-black border-3 border-black font-black px-6 py-2 shadow-brutal-small hover:shadow-brutal hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-150 rounded-lg">
+                CADASTRAR
+              </Button>
+              <Button className="bg-neon-green text-black border-3 border-black font-black px-6 py-2 shadow-brutal-small hover:shadow-brutal hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-150 rounded-lg">
+                ENTRAR
+              </Button>
             </div>
-            <Button variant="outline">Entrar</Button>
           </div>
         </div>
       </header>
 
       <main className="container mx-auto px-4 py-8 space-y-16">
         {/* Hero Section */}
-        <section className="text-center space-y-6">
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground">
-            Encontre os melhores preços de{' '}
-            <span className="text-primary">combustível</span>
+        <section className="text-center space-y-8">
+          <h1 className="text-4xl md:text-6xl font-black text-black leading-tight">
+            ENCONTRE OS MELHORES<br />
+            PREÇOS DE COMBUSTÍVEL<br />
+            NO BRASIL - <span className="text-neon-green">ZUP GÁS</span>
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Compare preços, encontre promoções e economize no abastecimento
-          </p>
-        </section>
-
-        {/* Fuel Types */}
-        <section className="space-y-8">
-          <h2 className="text-3xl font-bold text-center text-foreground">
-            Tipos de Combustível
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {fuelTypes.map((fuel, index) => (
-              <FuelCard
-                key={index}
-                title={fuel.title}
-                description={fuel.description}
-                icon={fuel.icon}
-                badge={fuel.badge}
+          
+          {/* Search */}
+          <div className="max-w-2xl mx-auto space-y-4">
+            <div className="relative">
+              <Input 
+                placeholder="Qual o seu endereço?"
+                className="h-16 text-lg font-bold border-4 border-black rounded-lg shadow-brutal-small text-center bg-white"
               />
-            ))}
-          </div>
-        </section>
-
-        {/* Action Cards */}
-        <section className="space-y-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {actions.map((action, index) => (
-              <ActionCard
-                key={index}
-                title={action.title}
-                subtitle={action.subtitle}
-                icon={action.icon}
-              />
-            ))}
-          </div>
-        </section>
-
-        {/* How It Works */}
-        <section className="space-y-8">
-          <h2 className="text-3xl font-bold text-center text-foreground">
-            Como Funciona
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {steps.map((step, index) => (
-              <div key={index} className="text-center space-y-3">
-                <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-lg mx-auto">
-                  {step.number}
-                </div>
-                <h3 className="font-semibold text-lg text-foreground">{step.title}</h3>
-                <p className="text-muted-foreground">{step.description}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Search Section */}
-        <section className="bg-primary/5 rounded-2xl p-8 border-2 border-primary/20">
-          <div className="text-center space-y-6">
-            <h2 className="text-3xl font-bold text-foreground">
-              Encontre postos próximos
-            </h2>
-            <div className="max-w-md mx-auto flex gap-2">
-              <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <Input 
-                  placeholder="Digite seu CEP ou cidade"
-                  className="pl-10"
-                />
-              </div>
-              <Button className="bg-primary hover:bg-primary/90">
-                <ArrowRight className="w-4 h-4" />
-              </Button>
+              <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 w-6 h-6 stroke-2 text-black" />
             </div>
+            <Button className="w-full h-16 bg-black text-white border-4 border-black font-black text-lg shadow-brutal hover:shadow-brutal-small hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-150 rounded-lg">
+              USAR LOCALIZAÇÃO ATUAL
+            </Button>
+          </div>
+        </section>
+
+        {/* Filters Section */}
+        <section className="bg-neon-green border-4 border-black rounded-lg p-8 shadow-brutal">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <Button className="h-16 bg-black text-white border-3 border-black font-black shadow-brutal-small hover:shadow-brutal hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-150 rounded-lg">
+              FILTROS
+            </Button>
+            <Button className="h-16 bg-white text-black border-3 border-black font-black shadow-brutal-small hover:shadow-brutal hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-150 rounded-lg">
+              CATEGORIAS
+            </Button>
+            <Button className="h-16 bg-white text-black border-3 border-black font-black shadow-brutal-small hover:shadow-brutal hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-150 rounded-lg">
+              DISTÂNCIA
+            </Button>
+            <Button className="h-16 bg-white text-black border-3 border-black font-black shadow-brutal-small hover:shadow-brutal hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-150 rounded-lg">
+              PREÇO
+            </Button>
+          </div>
+        </section>
+
+        {/* Process Steps */}
+        <section className="space-y-8">
+          <h2 className="text-3xl font-black text-center text-black">
+            COMO FUNCIONA
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            {processSteps.map((step, index) => (
+              <BrutalProcessCard
+                key={index}
+                number={step.number}
+                title={step.title}
+                description={step.description}
+                icon={step.icon}
+              />
+            ))}
           </div>
         </section>
 
         {/* Best Stations */}
         <section className="space-y-8">
-          <h2 className="text-3xl font-bold text-center text-foreground">
-            Melhores Postos
+          <h2 className="text-3xl font-black text-center text-black">
+            MELHORES POSTOS
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {bestStations.map((station, index) => (
-              <StationCard
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {stations.map((station, index) => (
+              <BrutalStationCard
                 key={index}
                 name={station.name}
                 address={station.address}
-                rating={station.rating}
-                totalRatings={station.totalRatings}
-                fuelPrice={station.fuelPrice}
+                price={station.price}
                 fuelType={station.fuelType}
                 discount={station.discount}
-                distance={station.distance}
+                rating={station.rating}
                 onGetCoupon={() => console.log('Get coupon for', station.name)}
+              />
+            ))}
+          </div>
+        </section>
+
+        {/* Fuel Types Section */}
+        <section className="bg-neon-green border-4 border-black rounded-lg p-8 shadow-brutal">
+          <h2 className="text-3xl font-black text-center text-black mb-8">
+            GASOLINA, ETANOL, DIESEL
+          </h2>
+          <div className="grid grid-cols-3 gap-8">
+            <div className="text-center">
+              <div className="w-20 h-20 bg-white border-4 border-black rounded-full flex items-center justify-center mx-auto shadow-brutal-small mb-4">
+                <Fuel className="w-8 h-8 text-black stroke-2" />
+              </div>
+              <div className="bg-black text-white px-4 py-2 rounded-lg font-black text-sm">
+                MAIS POPULAR
+              </div>
+            </div>
+            <div className="text-center">
+              <div className="w-20 h-20 bg-white border-4 border-black rounded-full flex items-center justify-center mx-auto shadow-brutal-small mb-4">
+                <Zap className="w-8 h-8 text-black stroke-2" />
+              </div>
+              <div className="bg-black text-white px-4 py-2 rounded-lg font-black text-sm">
+                ECO-FRIENDLY
+              </div>
+            </div>
+            <div className="text-center">
+              <div className="w-20 h-20 bg-white border-4 border-black rounded-full flex items-center justify-center mx-auto shadow-brutal-small mb-4">
+                <Truck className="w-8 h-8 text-black stroke-2" />
+              </div>
+              <div className="bg-black text-white px-4 py-2 rounded-lg font-black text-sm">
+                PROFISSIONAL
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Services Section */}
+        <section className="space-y-8">
+          <h2 className="text-3xl font-black text-center text-black">
+            TIPOS DE COMBUSTÍVEL E SERVIÇOS AUTOMOTIVOS
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {services.map((service, index) => (
+              <BrutalServiceCard
+                key={index}
+                title={service.title}
+                icon={service.icon}
+                badge={service.badge}
               />
             ))}
           </div>
