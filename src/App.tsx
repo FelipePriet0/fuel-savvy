@@ -29,11 +29,15 @@ import Cupom from "./routes/motorista/Cupom";
 import Dashboard from "./routes/posto/Dashboard";
 import CriarCupom from "./routes/posto/CriarCupom";
 import HistoricoCupons from "./routes/posto/HistoricoCupons";
-import Perfil from "./routes/posto/Perfil";
+import PostoPerfil from "./routes/posto/Perfil";
 import Precos from "./routes/posto/Precos";
+
+// Motorista routes
+import MotoristaPerfil from "./routes/motorista/Perfil";
 
 // Layout
 import PostoLayout from "./components/PostoLayout";
+import MotoristaLayout from "./components/MotoristaLayout";
 
 import NotFound from "./pages/NotFound";
 import { AdminDashboard } from "./pages/admin/AdminDashboard";
@@ -68,7 +72,10 @@ const App = () => (
                   <Route path="/cadastro/posto" element={<SignUpPosto />} />
                   
                   {/* Motorista routes */}
-                  <Route path="/" element={<Protected roleRequired="motorista"><Home /></Protected>} />
+                  <Route path="/" element={<Protected roleRequired="motorista"><MotoristaLayout /></Protected>}>
+                    <Route index element={<Home />} />
+                    <Route path="perfil" element={<MotoristaPerfil />} />
+                  </Route>
                   <Route path="/cupom/:id" element={<Protected><Cupom /></Protected>} />
                   
                   {/* Posto routes */}
@@ -76,7 +83,7 @@ const App = () => (
                     <Route index element={<Dashboard />} />
                     <Route path="novo" element={<CriarCupom />} />
                     <Route path="historico" element={<HistoricoCupons />} />
-                    <Route path="perfil" element={<Perfil />} />
+                    <Route path="perfil" element={<PostoPerfil />} />
                     <Route path="precos" element={<Precos />} />
                   </Route>
                   
