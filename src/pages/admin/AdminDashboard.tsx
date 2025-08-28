@@ -34,14 +34,20 @@ export const AdminDashboard = () => {
         return;
       }
 
-      const { data, error } = await supabase.rpc('is_admin', { user_id: user.id });
+      // Check if user is admin by looking at postos table
+      const { data, error } = await supabase
+        .from('postos')
+        .select('is_admin')
+        .eq('user_id', user.id)
+        .maybeSingle();
+
       if (error) {
         console.error('Erro ao verificar status de admin:', error);
         setIsAdmin(false);
         return;
       }
 
-      setIsAdmin(data || false);
+      setIsAdmin(data?.is_admin || false);
     } catch (error) {
       console.error('Erro ao verificar permissões:', error);
       setIsAdmin(false);

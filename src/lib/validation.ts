@@ -145,14 +145,14 @@ import { supabase } from '@/integrations/supabase/client';
 
 export const checkEmailExists = async (email: string): Promise<{ exists: boolean; message?: string }> => {
   try {
-    // Verificar em perfis
-    const { data: perfilData } = await supabase
-      .from('perfis')
+    // Verificar em profiles
+    const { data: profileData } = await supabase
+      .from('profiles')
       .select('email')
       .eq('email', email)
       .maybeSingle();
 
-    if (perfilData) {
+    if (profileData) {
       return { exists: true, message: 'Já existe uma conta com este email' };
     }
 
@@ -167,28 +167,6 @@ export const checkEmailExists = async (email: string): Promise<{ exists: boolean
       return { exists: true, message: 'Já existe uma conta com este email' };
     }
 
-    // Verificar em profiles
-    const { data: profileData } = await supabase
-      .from('profiles')
-      .select('email')
-      .eq('email', email)
-      .maybeSingle();
-
-    if (profileData) {
-      return { exists: true, message: 'Já existe uma conta com este email' };
-    }
-
-    // Verificar em stations
-    const { data: stationData } = await supabase
-      .from('stations')
-      .select('email')
-      .eq('email', email)
-      .maybeSingle();
-
-    if (stationData) {
-      return { exists: true, message: 'Já existe uma conta com este email' };
-    }
-
     return { exists: false };
   } catch (error) {
     console.error('Erro ao verificar email:', error);
@@ -199,17 +177,6 @@ export const checkEmailExists = async (email: string): Promise<{ exists: boolean
 export const checkCPFExists = async (cpf: string): Promise<{ exists: boolean; message?: string }> => {
   try {
     const cleanCPF = cpf.replace(/\D/g, '');
-
-    // Verificar em perfis
-    const { data: perfilData } = await supabase
-      .from('perfis')
-      .select('cpf')
-      .eq('cpf', cpf)
-      .maybeSingle();
-
-    if (perfilData) {
-      return { exists: true, message: 'Já existe uma conta com este CPF' };
-    }
 
     // Verificar em profiles
     const { data: profileData } = await supabase
@@ -242,17 +209,6 @@ export const checkCNPJExists = async (cnpj: string): Promise<{ exists: boolean; 
       return { exists: true, message: 'Já existe uma conta com este CNPJ' };
     }
 
-    // Verificar em stations
-    const { data: stationData } = await supabase
-      .from('stations')
-      .select('cnpj')
-      .eq('cnpj', cnpj)
-      .maybeSingle();
-
-    if (stationData) {
-      return { exists: true, message: 'Já existe uma conta com este CNPJ' };
-    }
-
     return { exists: false };
   } catch (error) {
     console.error('Erro ao verificar CNPJ:', error);
@@ -264,14 +220,14 @@ export const checkPhoneExists = async (phone: string): Promise<{ exists: boolean
   try {
     const cleanPhone = phone.replace(/\D/g, '');
 
-    // Verificar em perfis
-    const { data: perfilData } = await supabase
-      .from('perfis')
+    // Verificar em profiles
+    const { data: profileData } = await supabase
+      .from('profiles')
       .select('telefone')
       .eq('telefone', phone)
       .maybeSingle();
 
-    if (perfilData) {
+    if (profileData) {
       return { exists: true, message: 'Já existe uma conta com este telefone' };
     }
 
@@ -283,28 +239,6 @@ export const checkPhoneExists = async (phone: string): Promise<{ exists: boolean
       .maybeSingle();
 
     if (postoData) {
-      return { exists: true, message: 'Já existe uma conta com este telefone' };
-    }
-
-    // Verificar em profiles
-    const { data: profileData } = await supabase
-      .from('profiles')
-      .select('telefone, phone')
-      .or(`telefone.eq.${phone},phone.eq.${phone}`)
-      .maybeSingle();
-
-    if (profileData) {
-      return { exists: true, message: 'Já existe uma conta com este telefone' };
-    }
-
-    // Verificar em stations
-    const { data: stationData } = await supabase
-      .from('stations')
-      .select('phone')
-      .eq('phone', phone)
-      .maybeSingle();
-
-    if (stationData) {
       return { exists: true, message: 'Já existe uma conta com este telefone' };
     }
 
