@@ -6,47 +6,53 @@
 
 @layer base {
   :root {
-    /* Neo-Brutalism Design System */
-    --neon-green: 79 100% 62%; /* #B6FF3B */
-    --pure-black: 0 0% 0%; /* #000000 */
-    --pure-white: 0 0% 100%; /* #FFFFFF */
-    --dark-gray: 220 9% 17%; /* #2D3748 */
-    --medium-gray: 220 9% 46%; /* #718096 */
-    --light-gray: 220 13% 96%; /* #F7FAFC */
+    /* ZUP Design System - Light Theme (matching images) */
+    --zup-primary: 158 95% 56%; /* #2AF598 */
+    --zup-primary-foreground: 0 0% 100%;
+    
+    --zup-bg: 0 0% 100%; /* Pure white */
+    --zup-surface: 0 0% 100%; /* White cards */
+    --zup-border: 220 13% 91%; /* Light gray border #E5E7EB */
+    --zup-text: 220 9% 17%; /* Dark text #2D3748 */
+    --zup-muted: 220 9% 46%; /* Gray text #718096 */
+    
+    /* Card stroke system */
+    --stroke-light: 220 13% 91%; /* Light border for subtle cards */
+    --stroke-medium: 220 9% 80%; /* Medium border for action cards */
+    --stroke-primary: var(--zup-primary); /* Primary color for active states */
     
     /* Semantic mappings */
-    --background: var(--pure-white);
-    --foreground: var(--pure-black);
-    --card: var(--pure-white);
-    --card-foreground: var(--pure-black);
-    --popover: var(--pure-white);
-    --popover-foreground: var(--pure-black);
-    --primary: var(--neon-green);
-    --primary-foreground: var(--pure-black);
-    --secondary: var(--light-gray);
-    --secondary-foreground: var(--pure-black);
-    --muted: var(--light-gray);
-    --muted-foreground: var(--medium-gray);
-    --accent: var(--neon-green);
-    --accent-foreground: var(--pure-black);
+    --background: var(--zup-bg);
+    --foreground: var(--zup-text);
+    --card: var(--zup-surface);
+    --card-foreground: var(--zup-text);
+    --popover: var(--zup-surface);
+    --popover-foreground: var(--zup-text);
+    --primary: var(--zup-primary);
+    --primary-foreground: var(--zup-primary-foreground);
+    --secondary: 220 13% 96%; /* Light gray background */
+    --secondary-foreground: var(--zup-text);
+    --muted: 220 13% 96%;
+    --muted-foreground: var(--zup-muted);
+    --accent: var(--zup-primary);
+    --accent-foreground: var(--zup-primary-foreground);
     --destructive: 0 84% 60%;
-    --destructive-foreground: var(--pure-white);
-    --border: var(--pure-black);
-    --input: var(--pure-white);
-    --ring: var(--neon-green);
-    --radius: 0.5rem;
+    --destructive-foreground: 0 0% 100%;
+    --border: var(--stroke-light);
+    --input: var(--stroke-light);
+    --ring: var(--zup-primary);
+    --radius: 0.75rem;
     
-    /* Neo-brutalism specific */
-    --stroke-thick: 4px;
-    --stroke-medium: 3px;
-    --stroke-thin: 2px;
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--zup-primary)), hsl(158 90% 45%));
+    --gradient-surface: linear-gradient(145deg, hsl(0 0% 100%), hsl(220 13% 98%));
     
     /* Shadows */
-    --shadow-brutal: 8px 8px 0px hsl(var(--pure-black));
-    --shadow-brutal-small: 4px 4px 0px hsl(var(--pure-black));
+    --shadow-card: 0 2px 8px -2px hsl(220 9% 17% / 0.08);
+    --shadow-glow: 0 0 20px hsl(var(--zup-primary) / 0.15);
     
     /* Animations */
-    --transition-brutal: all 0.15s ease-out;
+    --transition-smooth: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 

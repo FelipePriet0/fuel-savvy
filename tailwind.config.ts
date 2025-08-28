@@ -55,9 +55,12 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				'neon-green': 'hsl(var(--neon-green))',
-				'pure-black': 'hsl(var(--pure-black))',
-				'pure-white': 'hsl(var(--pure-white))',
+				'zup-primary': 'hsl(var(--zup-primary))',
+				'zup-bg': 'hsl(var(--zup-bg))',
+				'zup-surface': 'hsl(var(--zup-surface))',
+				'zup-border': 'hsl(var(--zup-border))',
+				'zup-text': 'hsl(var(--zup-text))',
+				'zup-muted': 'hsl(var(--zup-muted))',
 			},
 			backgroundImage: {
 				'gradient-primary': 'var(--gradient-primary)',
@@ -66,13 +69,6 @@ export default {
 			boxShadow: {
 				'card': 'var(--shadow-card)',
 				'glow': 'var(--shadow-glow)',
-				'brutal': 'var(--shadow-brutal)',
-				'brutal-small': 'var(--shadow-brutal-small)',
-			},
-			borderWidth: {
-				'3': '3px',
-				'4': '4px',
-				'6': '6px',
 			},
 			transitionTimingFunction: {
 				'smooth': 'var(--transition-smooth)',
