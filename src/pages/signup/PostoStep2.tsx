@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Eye, EyeOff } from 'lucide-react';
+import { ArrowLeft, Eye, EyeOff, Loader2 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -26,10 +26,43 @@ export default function PostoStep2() {
   const navigate = useNavigate();
   const { postoData, setPostoData, resetContext, prevStep } = useSignup();
   const [loading, setLoading] = useState(false);
+  const [loadingCEP, setLoadingCEP] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [customBandeira, setCustomBandeira] = useState('');
+
+  const fetchAddressByCEP = async (cep: string) => {
+    try {
+      const cleanCEP = cep.replace(/\D/g, '');
+      if (cleanCEP.length !== 8) return;
+
+      setLoadingCEP(true);
+      const response = await fetch(`https://viacep.com.br/ws/${cleanCEP}/json/`);
+      const data = await response.json();
+
+      if (data.erro) {
+        toast.error('CEP não encontrado');
+        return;
+      }
+
+      // Só preenche campos vazios
+      const updates: any = {};
+      if (!postoData.rua) updates.rua = data.logradouro;
+      if (!postoData.bairro) updates.bairro = data.bairro;
+      if (!postoData.cidade) updates.cidade = data.localidade;
+
+      if (Object.keys(updates).length > 0) {
+        setPostoData(updates);
+        toast.success('Endereço encontrado!');
+      }
+    } catch (error) {
+      console.error('Erro ao buscar CEP:', error);
+      toast.error('Erro ao buscar CEP');
+    } finally {
+      setLoadingCEP(false);
+    }
+  };
 
   const handleInputChange = (field: string, value: string) => {
     let processedValue = value;
@@ -38,6 +71,12 @@ export default function PostoStep2() {
       processedValue = maskPhone(value);
     } else if (field === 'cep') {
       processedValue = maskCEP(value);
+      
+      // Busca automática quando CEP estiver completo
+      const cleanCEP = processedValue.replace(/\D/g, '');
+      if (cleanCEP.length === 8) {
+        fetchAddressByCEP(processedValue);
+      }
     }
     
     setPostoData({ [field]: processedValue });
@@ -193,15 +232,23 @@ export default function PostoStep2() {
               {/* CEP */}
               <div>
                 <Label htmlFor="cep">CEP</Label>
-                <Input
-                  id="cep"
-                  type="text"
-                  value={postoData.cep || ''}
-                  onChange={(e) => handleInputChange('cep', e.target.value)}
-                  placeholder="00000-000"
-                  maxLength={9}
-                  className={errors.cep ? 'border-destructive' : ''}
-                />
+                <div className="relative">
+                  <Input
+                    id="cep"
+                    type="text"
+                    value={postoData.cep || ''}
+                    onChange={(e) => handleInputChange('cep', e.target.value)}
+                    placeholder="00000-000"
+                    maxLength={9}
+                    className={errors.cep ? 'border-destructive pr-10' : 'pr-10'}
+                    disabled={loadingCEP}
+                  />
+                  {loadingCEP && (
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                      <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
+                    </div>
+                  )}
+                </div>
                 {errors.cep && (
                   <p className="text-sm text-destructive mt-1">{errors.cep}</p>
                 )}
