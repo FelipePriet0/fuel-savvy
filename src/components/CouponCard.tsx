@@ -81,7 +81,7 @@ const CouponCard = ({ cupom }: CupomCardProps) => {
 
         {/* Benefício */}
         <div className="flex items-center gap-2 text-primary">
-          <DollarSign className="h-4 w-4 border border-black rounded p-0.5" />
+          <DollarSign className="h-4 w-4" />
           <span className="text-sm font-medium">
             Economize {formatarPreco(cupom.desconto_total)} no total no mínimo de {formatarPreco(cupom.gasto_minimo)}
           </span>
@@ -95,7 +95,7 @@ const CouponCard = ({ cupom }: CupomCardProps) => {
 
         {/* Validade */}
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Clock className="h-4 w-4 border border-black rounded p-0.5" />
+          <Clock className="h-4 w-4" />
           <span>
             Válido até {formatarData(cupom.validade_fim)}
           </span>
@@ -104,7 +104,7 @@ const CouponCard = ({ cupom }: CupomCardProps) => {
         {/* Localização */}
         {cupom.posto?.lat && cupom.posto?.lng && (
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <MapPin className="h-4 w-4 border border-black rounded p-0.5" />
+            <MapPin className="h-4 w-4" />
             <span>Localização disponível</span>
           </div>
         )}

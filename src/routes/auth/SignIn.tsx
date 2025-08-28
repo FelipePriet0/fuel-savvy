@@ -60,7 +60,7 @@ const SignIn = () => {
             <div className="space-y-2">
               <Label htmlFor="email">E-mail</Label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4 border border-black rounded p-0.5" />
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                 <Input id="email" type="email" placeholder="seu@email.com" value={email} onChange={e => setEmail(e.target.value)} required className="pl-10" />
               </div>
             </div>
@@ -68,7 +68,7 @@ const SignIn = () => {
             <div className="space-y-2">
               <Label htmlFor="password">Senha</Label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4 border border-black rounded p-0.5" />
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                 <Input id="password" type="password" placeholder="••••••••" value={password} onChange={e => setPassword(e.target.value)} required className="pl-10" />
               </div>
             </div>

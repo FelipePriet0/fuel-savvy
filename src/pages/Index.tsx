@@ -20,19 +20,19 @@ const Index = () => {
     {
       title: "Gasolina",
       description: "Combustível mais popular para carros de passeio",
-      icon: <Fuel className="w-8 h-8 text-primary border-2 border-black rounded-lg p-1" />,
+      icon: <Fuel className="w-8 h-8 text-primary" />,
       badge: "Mais Popular"
     },
     {
       title: "Etanol",
       description: "Opção sustentável e econômica",
-      icon: <Zap className="w-8 h-8 text-primary border-2 border-black rounded-lg p-1" />,
+      icon: <Zap className="w-8 h-8 text-primary" />,
       badge: "Eco-Friendly"
     },
     {
       title: "Diesel",
       description: "Ideal para veículos pesados e caminhões",
-      icon: <Truck className="w-8 h-8 text-primary border-2 border-black rounded-lg p-1" />,
+      icon: <Truck className="w-8 h-8 text-primary" />,
       badge: "Profissional"
     }
   ]
@@ -41,22 +41,22 @@ const Index = () => {
     {
       title: "Tendências",
       subtitle: "Preços em alta",
-      icon: <TrendingUp className="w-full h-full border-2 border-black rounded-lg p-1" />
+      icon: <TrendingUp className="w-full h-full" />
     },
     {
       title: "Promoções",
       subtitle: "Ofertas especiais",
-      icon: <Gift className="w-full h-full border-2 border-black rounded-lg p-1" />
+      icon: <Gift className="w-full h-full" />
     },
     {
       title: "Próximos",
       subtitle: "Postos perto de você",
-      icon: <MapPin className="w-full h-full border-2 border-black rounded-lg p-1" />
+      icon: <MapPin className="w-full h-full" />
     },
     {
       title: "Comunidade",
       subtitle: "Avaliações dos usuários",
-      icon: <Users className="w-full h-full border-2 border-black rounded-lg p-1" />
+      icon: <Users className="w-full h-full" />
     }
   ]
 
@@ -184,7 +184,7 @@ const Index = () => {
                 />
               </div>
               <Button className="bg-primary hover:bg-primary/90">
-                <ArrowRight className="w-4 h-4 border border-black rounded p-0.5" />
+                <ArrowRight className="w-4 h-4" />
               </Button>
             </div>
           </div>

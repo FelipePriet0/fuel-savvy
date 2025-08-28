@@ -152,7 +152,7 @@ const HistoricoCupons = () => {
         {/* Header */}
         <div>
           <h1 className="text-3xl font-bold flex items-center gap-2">
-            <History className="h-8 w-8 text-primary border-2 border-black rounded-lg p-1" />
+            <History className="h-8 w-8 text-primary" />
             Histórico de Cupons
           </h1>
           <p className="text-muted-foreground">
@@ -243,7 +243,7 @@ const HistoricoCupons = () => {
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-2">
-                          <Fuel className="h-4 w-4 text-primary border border-black rounded p-0.5" />
+                          <Fuel className="h-4 w-4 text-primary" />
                           <div>
                             <div className="font-medium">
                               {uso.cupom?.combustivel}

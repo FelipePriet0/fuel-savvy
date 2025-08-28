@@ -116,7 +116,7 @@ const Home = () => {
           <CardContent className="p-6">
             <div className="flex items-center gap-4">
               <div className="p-3 bg-primary/10 rounded-lg border-2 border-black">
-                <Wallet className="h-8 w-8 text-primary border-2 border-black rounded-lg p-1" />
+                <Wallet className="h-8 w-8 text-primary" />
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Total Economizado</p>
@@ -142,7 +142,7 @@ const Home = () => {
             </div>
             
             <div className="flex items-center gap-2">
-              <Filter className="h-4 w-4 text-muted-foreground border border-black rounded p-0.5" />
+              <Filter className="h-4 w-4 text-muted-foreground" />
               <Select value={selectedCombustivel} onValueChange={setSelectedCombustivel}>
                 <SelectTrigger className="w-40">
                   <SelectValue />

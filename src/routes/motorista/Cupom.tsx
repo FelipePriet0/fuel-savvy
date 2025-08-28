@@ -312,7 +312,7 @@ const Cupom = () => {
                 <CardContent className="p-6">
                   {jaUsado ? (
                     <div className="text-center space-y-2">
-                      <CheckCircle className="h-8 w-8 text-primary mx-auto border-2 border-black rounded-lg p-1" />
+                      <CheckCircle className="h-8 w-8 text-primary mx-auto" />
                       <h3 className="font-semibold">Cupom já utilizado</h3>
                       <p className="text-sm text-muted-foreground">
                         Você já registrou o uso deste cupom

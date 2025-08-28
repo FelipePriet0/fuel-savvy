@@ -467,7 +467,7 @@ const Dashboard = () => {
                                     {atualizandoCupom === cupom.id ? (
                                       <Loader2 className="h-4 w-4 animate-spin" />
                                     ) : cupom.ativo ? (
-                                      <ToggleRight className="h-4 w-4 text-primary border border-black rounded p-0.5" />
+                                      <ToggleRight className="h-4 w-4 text-primary" />
                                     ) : (
                                       <ToggleLeft className="h-4 w-4 text-muted-foreground" />
                                     )}

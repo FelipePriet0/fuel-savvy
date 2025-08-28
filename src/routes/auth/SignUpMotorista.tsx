@@ -68,7 +68,7 @@ const SignUpMotorista = () => {
             <div className="space-y-2">
               <Label htmlFor="nome">Nome completo</Label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4 border border-black rounded p-0.5" />
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                 <Input
                   id="nome"
                   name="nome"
@@ -84,7 +84,7 @@ const SignUpMotorista = () => {
             <div className="space-y-2">
               <Label htmlFor="telefone">Telefone</Label>
               <div className="relative">
-                <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4 border border-black rounded p-0.5" />
+                <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                 <Input
                   id="telefone"
                   name="telefone"
@@ -100,7 +100,7 @@ const SignUpMotorista = () => {
             <div className="space-y-2">
               <Label htmlFor="cpf">CPF</Label>
               <div className="relative">
-                <CreditCard className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4 border border-black rounded p-0.5" />
+                <CreditCard className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                 <Input
                   id="cpf"
                   name="cpf"
@@ -116,7 +116,7 @@ const SignUpMotorista = () => {
             <div className="space-y-2">
               <Label htmlFor="email">E-mail</Label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4 border border-black rounded p-0.5" />
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                 <Input
                   id="email"
                   name="email"
@@ -133,7 +133,7 @@ const SignUpMotorista = () => {
             <div className="space-y-2">
               <Label htmlFor="password">Senha</Label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4 border border-black rounded p-0.5" />
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                 <Input
                   id="password"
                   name="password"
