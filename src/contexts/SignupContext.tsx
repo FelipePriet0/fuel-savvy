@@ -25,8 +25,6 @@ export interface PostoData {
   longitude?: number;
   place_id?: string;
   bandeira?: string;
-  responsavel_nome?: string;
-  responsavel_telefone?: string;
   senha?: string;
   confirmarSenha?: string;
 }

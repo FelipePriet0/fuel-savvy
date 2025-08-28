@@ -68,9 +68,7 @@ export default function PostoStep2() {
   const handleInputChange = (field: string, value: string) => {
     let processedValue = value;
     
-    if (field === 'responsavel_telefone') {
-      processedValue = maskPhone(value);
-    } else if (field === 'cep') {
+    if (field === 'cep') {
       processedValue = maskCEP(value);
       
       // Busca automática quando CEP estiver completo
@@ -142,14 +140,6 @@ export default function PostoStep2() {
       newErrors.bandeira = 'Digite o nome da bandeira personalizada';
     }
 
-    if (!postoData.responsavel_nome?.trim()) {
-      newErrors.responsavel_nome = 'Nome do responsável é obrigatório';
-    }
-
-    if (!postoData.responsavel_telefone) {
-      newErrors.responsavel_telefone = 'Telefone do responsável é obrigatório';
-    }
-
     if (!postoData.senha) {
       newErrors.senha = 'Senha é obrigatória';
     } else {
@@ -193,8 +183,6 @@ export default function PostoStep2() {
             telefone: postoData.telefone,
             endereco: enderecoCompleto,
             bandeira: finalBandeira,
-            responsavel_nome: postoData.responsavel_nome,
-            responsavel_telefone: postoData.responsavel_telefone,
           }
         }
       });
@@ -376,45 +364,6 @@ export default function PostoStep2() {
               
               {errors.bandeira && (
                 <p className="text-sm text-destructive mt-1">{errors.bandeira}</p>
-              )}
-            </div>
-
-            </div>
-
-            {/* Seção Responsável */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium text-foreground">Responsável</h3>
-              
-              {/* Responsável Nome */}
-            <div>
-              <Label htmlFor="responsavel_nome">Responsável (nome)</Label>
-              <Input
-                id="responsavel_nome"
-                type="text"
-                value={postoData.responsavel_nome || ''}
-                onChange={(e) => handleInputChange('responsavel_nome', e.target.value)}
-                placeholder="Nome do responsável"
-                className={errors.responsavel_nome ? 'border-destructive' : ''}
-              />
-              {errors.responsavel_nome && (
-                <p className="text-sm text-destructive mt-1">{errors.responsavel_nome}</p>
-              )}
-            </div>
-
-            {/* Responsável Telefone */}
-            <div>
-              <Label htmlFor="responsavel_telefone">Responsável (celular)</Label>
-              <Input
-                id="responsavel_telefone"
-                type="text"
-                value={postoData.responsavel_telefone || ''}
-                onChange={(e) => handleInputChange('responsavel_telefone', e.target.value)}
-                placeholder="(11) 99999-9999"
-                maxLength={15}
-                className={errors.responsavel_telefone ? 'border-destructive' : ''}
-              />
-              {errors.responsavel_telefone && (
-                <p className="text-sm text-destructive mt-1">{errors.responsavel_telefone}</p>
               )}
             </div>
 
