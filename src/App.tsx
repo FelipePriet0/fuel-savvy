@@ -10,6 +10,8 @@ import { SignupProvider } from "./contexts/SignupContext";
 
 // Auth routes
 import SignIn from "./routes/auth/SignIn";
+import ForgotPassword from "./routes/auth/ForgotPassword";
+import ResetPassword from "./routes/auth/ResetPassword";
 import SignUpMotorista from "./routes/auth/SignUpMotorista";
 import SignUpPosto from "./routes/auth/SignUpPosto";
 
@@ -52,6 +54,8 @@ const App = () => (
                 <Routes>
                   {/* Public routes */}
                   <Route path="/entrar" element={<SignIn />} />
+                  <Route path="/forgot-password" element={<ForgotPassword />} />
+                  <Route path="/reset-password" element={<ResetPassword />} />
                   
                   {/* New progressive signup flow */}
                   <Route path="/signup" element={<ProfileChoice />} />
