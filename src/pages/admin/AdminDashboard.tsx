@@ -34,10 +34,10 @@ export const AdminDashboard = () => {
         return;
       }
 
-      // Check if user is admin by looking at postos table
+      // Check if user is admin by looking at admin_users table
       const { data, error } = await supabase
-        .from('postos')
-        .select('is_admin')
+        .from('admin_users')
+        .select('is_active, role')
         .eq('user_id', user.id)
         .maybeSingle();
 
@@ -47,7 +47,7 @@ export const AdminDashboard = () => {
         return;
       }
 
-      setIsAdmin(data?.is_admin || false);
+      setIsAdmin(data?.is_active || false);
     } catch (error) {
       console.error('Erro ao verificar permissões:', error);
       setIsAdmin(false);
