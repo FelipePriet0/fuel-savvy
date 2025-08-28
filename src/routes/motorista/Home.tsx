@@ -4,7 +4,8 @@ import CouponCard from '@/components/CouponCard';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, Search, Filter, Fuel } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Loader2, Search, Filter, Fuel, Wallet } from 'lucide-react';
 interface CupomComPosto extends Cupom {
   posto?: {
     id: string;
@@ -14,13 +15,42 @@ interface CupomComPosto extends Cupom {
     lng?: number;
   };
 }
+
+interface UserProfile {
+  nome?: string;
+  full_name?: string;
+  total_savings?: number;
+}
+
 const Home = () => {
   const [cupons, setCupons] = useState<CupomComPosto[]>([]);
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCombustivel, setSelectedCombustivel] = useState<string>('todos');
   const [combustiveis, setCombustiveis] = useState<string[]>([]);
+
   useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) return;
+
+        // Buscar perfil do usuário
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('nome, full_name, total_savings')
+          .eq('id', user.id)
+          .single();
+
+        if (profile) {
+          setUserProfile(profile);
+        }
+      } catch (error) {
+        console.error('Erro ao buscar dados do usuário:', error);
+      }
+    };
+
     const fetchCupons = async () => {
       try {
         const now = new Date().toISOString();
@@ -48,63 +78,95 @@ const Home = () => {
         setLoading(false);
       }
     };
-    fetchCupons();
+
+    Promise.all([fetchUserData(), fetchCupons()]);
   }, []);
+
   const filteredCupons = cupons.filter(cupom => {
     const matchesSearch = cupom.posto?.nome_fantasia?.toLowerCase().includes(searchTerm.toLowerCase()) || cupom.combustivel.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCombustivel = selectedCombustivel === 'todos' || cupom.combustivel === selectedCombustivel;
     return matchesSearch && matchesCombustivel;
   });
+
+  const firstName = userProfile?.nome?.split(' ')[0] || userProfile?.full_name?.split(' ')[0] || 'Usuário';
+  const totalSavings = userProfile?.total_savings || 0;
+
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
       </div>;
   }
+
   return <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
-      <div className="container py-8 space-y-8">
-        {/* Header */}
-        <div className="text-center space-y-4">
-          
-          <h1 className="text-4xl font-bold">
-            Encontre os melhores <span className="text-primary">cupons</span>
+      <div className="container py-6 space-y-6">
+        {/* Headline 1: Olá, (Primeiro nome) */}
+        <div className="space-y-2">
+          <h1 className="text-3xl font-bold text-foreground">
+            Olá, {firstName}
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Descubra ofertas exclusivas em postos de gasolina da sua região e economize no abastecimento
+          
+          {/* SubHeadline */}
+          <p className="text-lg text-muted-foreground">
+            Veja o quanto você já economizou com a Zup
           </p>
         </div>
 
-        {/* Filtros */}
-        <div className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input placeholder="Buscar por posto ou combustível..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-10" />
+        {/* Card: Total economizado */}
+        <Card className="bg-gradient-primary border-2 border-accent">
+          <CardContent className="p-6">
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-primary/10 rounded-lg">
+                <Wallet className="h-8 w-8 text-primary" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">Total Economizado</p>
+                <p className="text-3xl font-bold text-primary">
+                  R$ {totalSavings.toFixed(2).replace('.', ',')}
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Headline 2: Cupons Ativos */}
+        <div className="space-y-4">
+          <h2 className="text-2xl font-bold text-foreground">
+            Cupons Ativos
+          </h2>
+
+          {/* Filtros */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+              <Input placeholder="Buscar por posto ou combustível..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-10" />
+            </div>
+            
+            <div className="flex items-center gap-2">
+              <Filter className="h-4 w-4 text-muted-foreground" />
+              <Select value={selectedCombustivel} onValueChange={setSelectedCombustivel}>
+                <SelectTrigger className="w-40">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="todos">Todos</SelectItem>
+                  {combustiveis.map(combustivel => <SelectItem key={combustivel} value={combustivel}>
+                      {combustivel}
+                    </SelectItem>)}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
-          
-          <div className="flex items-center gap-2">
-            <Filter className="h-4 w-4 text-muted-foreground" />
-            <Select value={selectedCombustivel} onValueChange={setSelectedCombustivel}>
-              <SelectTrigger className="w-40">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="todos">Todos</SelectItem>
-                {combustiveis.map(combustivel => <SelectItem key={combustivel} value={combustivel}>
-                    {combustivel}
-                  </SelectItem>)}
-              </SelectContent>
-            </Select>
+
+          {/* Stats */}
+          <div className="flex justify-center">
+            <Badge variant="outline" className="text-primary border-primary/30">
+              {filteredCupons.length} cupons disponíveis
+            </Badge>
           </div>
         </div>
 
-        {/* Stats */}
-        <div className="flex justify-center">
-          <Badge variant="outline" className="text-primary border-primary/30">
-            {filteredCupons.length} cupons disponíveis
-          </Badge>
-        </div>
-
-        {/* Cupons Grid */}
-        {filteredCupons.length > 0 ? <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Cards de cupons ativos */}
+        {filteredCupons.length > 0 ? <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {filteredCupons.map(cupom => <CouponCard key={cupom.id} cupom={cupom} />)}
           </div> : <div className="text-center py-16">
             <Fuel className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
