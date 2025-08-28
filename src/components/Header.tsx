@@ -47,60 +47,21 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60">
       <div className="container flex h-16 items-center justify-between">
-        <div className="flex items-center space-x-6">
+        <div className="flex">
           <Link to="/" className="flex items-center space-x-2">
             <div className="h-8 w-8 rounded-lg bg-gradient-primary flex items-center justify-center">
               <span className="text-black font-bold text-sm">Z</span>
             </div>
             <span className="font-bold text-xl">ZUP</span>
           </Link>
-
-          {user && (
-            <nav className="flex items-center space-x-4">
-              {user.role === 'posto' && (
-                <>
-                  <Button variant="ghost" size="sm" asChild>
-                    <Link to="/posto" className="flex items-center space-x-2">
-                      <BarChart3 className="h-4 w-4" />
-                      <span>Painel do Posto</span>
-                    </Link>
-                  </Button>
-                  <Button variant="ghost" size="sm" asChild>
-                    <Link to="/posto/novo">Criar Cupom</Link>
-                  </Button>
-                </>
-              )}
-              {user.role === 'motorista' && (
-                <Button variant="ghost" size="sm" asChild>
-                  <Link to="/" className="flex items-center space-x-2">
-                    <Home className="h-4 w-4" />
-                    <span>Início</span>
-                  </Link>
-                </Button>
-              )}
-            </nav>
-          )}
         </div>
 
         <div className="flex items-center space-x-2">
           {user ? (
-            <div className="flex items-center space-x-2">
-              <span className="text-sm text-muted-foreground">
-                Olá, {user.email}
-              </span>
-              {user.role === 'posto' && (
-                <Button variant="ghost" size="sm" asChild>
-                  <Link to="/posto/perfil" className="flex items-center space-x-2">
-                    <User className="h-4 w-4" />
-                    <span>Perfil</span>
-                  </Link>
-                </Button>
-              )}
-              <Button variant="outline" size="sm" onClick={handleSignOut}>
-                <LogOut className="h-4 w-4 mr-2" />
-                Sair
-              </Button>
-            </div>
+            <Button variant="outline" size="sm" onClick={handleSignOut}>
+              <LogOut className="h-4 w-4 mr-2" />
+              Sair
+            </Button>
           ) : (
             <div className="flex items-center space-x-2">
               <Button variant="outline" size="sm" asChild>
