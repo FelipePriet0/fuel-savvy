@@ -132,7 +132,7 @@ export default function MotoristaForm() {
 
       toast.success('Cadastro realizado com sucesso!');
       resetContext();
-      navigate('/');
+      navigate('/', { replace: true }); // Motorista vai para home
     } catch (error: any) {
       console.error('Erro no cadastro:', error);
       toast.error(error.message || 'Erro ao realizar cadastro');

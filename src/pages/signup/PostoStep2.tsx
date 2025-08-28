@@ -212,7 +212,7 @@ export default function PostoStep2() {
 
       toast.success('Cadastro realizado com sucesso!');
       resetContext();
-      navigate('/');
+      navigate('/posto', { replace: true }); // Posto vai para área do posto
     } catch (error: any) {
       console.error('Erro no cadastro:', error);
       toast.error(error.message || 'Erro ao realizar cadastro');
