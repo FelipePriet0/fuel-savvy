@@ -20,19 +20,19 @@ const Index = () => {
     {
       title: "Gasolina",
       description: "Combustível mais popular para carros de passeio",
-      icon: <Fuel className="w-8 h-8 text-primary" />,
+      icon: <Fuel className="w-8 h-8 text-primary border-2 border-black rounded-lg p-1" />,
       badge: "Mais Popular"
     },
     {
       title: "Etanol",
       description: "Opção sustentável e econômica",
-      icon: <Zap className="w-8 h-8 text-primary" />,
+      icon: <Zap className="w-8 h-8 text-primary border-2 border-black rounded-lg p-1" />,
       badge: "Eco-Friendly"
     },
     {
       title: "Diesel",
       description: "Ideal para veículos pesados e caminhões",
-      icon: <Truck className="w-8 h-8 text-primary" />,
+      icon: <Truck className="w-8 h-8 text-primary border-2 border-black rounded-lg p-1" />,
       badge: "Profissional"
     }
   ]
@@ -41,22 +41,22 @@ const Index = () => {
     {
       title: "Tendências",
       subtitle: "Preços em alta",
-      icon: <TrendingUp className="w-full h-full" />
+      icon: <TrendingUp className="w-full h-full border-2 border-black rounded-lg p-1" />
     },
     {
       title: "Promoções",
       subtitle: "Ofertas especiais",
-      icon: <Gift className="w-full h-full" />
+      icon: <Gift className="w-full h-full border-2 border-black rounded-lg p-1" />
     },
     {
       title: "Próximos",
       subtitle: "Postos perto de você",
-      icon: <MapPin className="w-full h-full" />
+      icon: <MapPin className="w-full h-full border-2 border-black rounded-lg p-1" />
     },
     {
       title: "Comunidade",
       subtitle: "Avaliações dos usuários",
-      icon: <Users className="w-full h-full" />
+      icon: <Users className="w-full h-full border-2 border-black rounded-lg p-1" />
     }
   ]
 
@@ -184,7 +184,7 @@ const Index = () => {
                 />
               </div>
               <Button className="bg-primary hover:bg-primary/90">
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 border border-black rounded p-0.5" />
               </Button>
             </div>
           </div>

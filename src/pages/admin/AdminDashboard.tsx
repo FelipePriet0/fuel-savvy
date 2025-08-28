@@ -90,7 +90,7 @@ export const AdminDashboard = () => {
   return (
     <div className="container mx-auto p-6 space-y-6">
       <div className="flex items-center gap-3 mb-6">
-        <Shield className="w-8 h-8 text-primary" />
+        <Shield className="w-8 h-8 text-primary border-2 border-black rounded-lg p-1" />
         <div>
           <h1 className="text-3xl font-bold">Painel Administrativo</h1>
           <p className="text-muted-foreground">Ferramentas de suporte ao cliente</p>

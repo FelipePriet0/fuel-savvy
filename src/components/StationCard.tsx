@@ -41,7 +41,7 @@ export const StationCard = ({
             <div className="flex-1">
               <h3 className="font-semibold text-lg text-foreground mb-1">{name}</h3>
               <div className="flex items-center text-sm text-muted-foreground">
-                <MapPin className="w-4 h-4 mr-1" />
+                <MapPin className="w-4 h-4 mr-1 border border-black rounded p-0.5" />
                 <span>{address}</span>
                 {distance && <span className="ml-2">• {distance}</span>}
               </div>
