@@ -26,7 +26,7 @@ export const ActionCard = ({
     >
       <CardContent className="p-6">
         <div className="flex flex-col items-center text-center space-y-4">
-          <div className="w-12 h-12 text-primary group-hover:text-primary/80 transition-colors">
+          <div className="w-12 h-12 rounded-lg bg-background border-2 border-black flex items-center justify-center text-primary group-hover:text-primary/80 transition-colors">
             {icon}
           </div>
           <div className="space-y-1">

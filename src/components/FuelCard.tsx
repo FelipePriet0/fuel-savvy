@@ -33,7 +33,7 @@ export const FuelCard = ({
       )}
       <CardContent className="p-6">
         <div className="flex flex-col items-center text-center space-y-4">
-          <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center border-2 border-primary/20">
+          <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center border-2 border-black">
             {icon}
           </div>
           <div className="space-y-2">

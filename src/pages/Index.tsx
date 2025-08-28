@@ -170,7 +170,7 @@ const Index = () => {
         </section>
 
         {/* Search Section */}
-        <section className="bg-primary/5 rounded-2xl p-8 border-2 border-primary/20">
+        <section className="bg-primary/5 rounded-2xl p-8 border-2 border-black">
           <div className="text-center space-y-6">
             <h2 className="text-3xl font-bold text-foreground">
               Encontre postos próximos

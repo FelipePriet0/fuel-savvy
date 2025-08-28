@@ -252,7 +252,7 @@ const Cupom = () => {
 
               <CardContent className="space-y-6">
                 {/* Preços destacados */}
-                <div className="bg-primary/10 border border-primary/20 rounded-lg p-6 text-center">
+                <div className="bg-primary/10 border-2 border-black rounded-lg p-6 text-center">
                   <div className="space-y-3">
                     <div className="flex items-center justify-center gap-3">
                       <span className="text-2xl line-through text-muted-foreground">
