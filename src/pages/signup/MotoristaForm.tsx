@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { useSignup } from '@/contexts/SignupContext';
-import { validateCPF, validateEmail, validatePassword, maskCPF, maskPhone, checkEmailExists, checkCPFExists } from '@/lib/validation';
+import { validateCPF, validateEmail, validatePassword, maskCPF, maskPhone, validateDriverData } from '@/lib/validation';
 import { PasswordValidationFeedback } from '@/components/PasswordValidationFeedback';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
@@ -95,20 +95,21 @@ export default function MotoristaForm() {
     setLoading(true);
     
     try {
-      // Verificar se email já existe
-      const emailCheck = await checkEmailExists(motoristaData.email);
-      if (emailCheck.exists) {
-        toast.error(emailCheck.message);
-        setErrors(prev => ({ ...prev, email: emailCheck.message! }));
-        setLoading(false);
-        return;
-      }
+      // Validação consolidada de duplicatas
+      const validationResult = await validateDriverData(
+        motoristaData.email,
+        motoristaData.cpf,
+        motoristaData.telefone
+      );
 
-      // Verificar se CPF já existe
-      const cpfCheck = await checkCPFExists(motoristaData.cpf);
-      if (cpfCheck.exists) {
-        toast.error(cpfCheck.message);
-        setErrors(prev => ({ ...prev, cpf: cpfCheck.message! }));
+      if (!validationResult.isValid) {
+        toast.error(validationResult.message || 'Dados já existem no sistema');
+        if (validationResult.field) {
+          setErrors(prev => ({ 
+            ...prev, 
+            [validationResult.field!]: validationResult.message! 
+          }));
+        }
         setLoading(false);
         return;
       }

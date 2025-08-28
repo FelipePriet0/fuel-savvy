@@ -259,3 +259,114 @@ export const checkCNPJExists = async (cnpj: string): Promise<{ exists: boolean; 
     return { exists: false };
   }
 };
+
+export const checkPhoneExists = async (phone: string): Promise<{ exists: boolean; message?: string }> => {
+  try {
+    const cleanPhone = phone.replace(/\D/g, '');
+
+    // Verificar em perfis
+    const { data: perfilData } = await supabase
+      .from('perfis')
+      .select('telefone')
+      .eq('telefone', phone)
+      .maybeSingle();
+
+    if (perfilData) {
+      return { exists: true, message: 'Já existe uma conta com este telefone' };
+    }
+
+    // Verificar em postos
+    const { data: postoData } = await supabase
+      .from('postos')
+      .select('telefone')
+      .eq('telefone', phone)
+      .maybeSingle();
+
+    if (postoData) {
+      return { exists: true, message: 'Já existe uma conta com este telefone' };
+    }
+
+    // Verificar em profiles
+    const { data: profileData } = await supabase
+      .from('profiles')
+      .select('telefone, phone')
+      .or(`telefone.eq.${phone},phone.eq.${phone}`)
+      .maybeSingle();
+
+    if (profileData) {
+      return { exists: true, message: 'Já existe uma conta com este telefone' };
+    }
+
+    // Verificar em stations
+    const { data: stationData } = await supabase
+      .from('stations')
+      .select('phone')
+      .eq('phone', phone)
+      .maybeSingle();
+
+    if (stationData) {
+      return { exists: true, message: 'Já existe uma conta com este telefone' };
+    }
+
+    return { exists: false };
+  } catch (error) {
+    console.error('Erro ao verificar telefone:', error);
+    return { exists: false };
+  }
+};
+
+// Validação consolidada para motoristas
+export const validateDriverData = async (email: string, cpf: string, telefone: string): Promise<{ isValid: boolean; field?: string; message?: string }> => {
+  try {
+    // Verificar email
+    const emailCheck = await checkEmailExists(email);
+    if (emailCheck.exists) {
+      return { isValid: false, field: 'email', message: emailCheck.message };
+    }
+
+    // Verificar CPF
+    const cpfCheck = await checkCPFExists(cpf);
+    if (cpfCheck.exists) {
+      return { isValid: false, field: 'cpf', message: cpfCheck.message };
+    }
+
+    // Verificar telefone
+    const phoneCheck = await checkPhoneExists(telefone);
+    if (phoneCheck.exists) {
+      return { isValid: false, field: 'telefone', message: phoneCheck.message };
+    }
+
+    return { isValid: true };
+  } catch (error) {
+    console.error('Erro na validação de motorista:', error);
+    return { isValid: false, message: 'Erro ao validar dados' };
+  }
+};
+
+// Validação consolidada para postos
+export const validateStationData = async (email: string, cnpj: string, telefone: string): Promise<{ isValid: boolean; field?: string; message?: string }> => {
+  try {
+    // Verificar email
+    const emailCheck = await checkEmailExists(email);
+    if (emailCheck.exists) {
+      return { isValid: false, field: 'email', message: emailCheck.message };
+    }
+
+    // Verificar CNPJ
+    const cnpjCheck = await checkCNPJExists(cnpj);
+    if (cnpjCheck.exists) {
+      return { isValid: false, field: 'cnpj', message: cnpjCheck.message };
+    }
+
+    // Verificar telefone
+    const phoneCheck = await checkPhoneExists(telefone);
+    if (phoneCheck.exists) {
+      return { isValid: false, field: 'telefone', message: phoneCheck.message };
+    }
+
+    return { isValid: true };
+  } catch (error) {
+    console.error('Erro na validação de posto:', error);
+    return { isValid: false, message: 'Erro ao validar dados' };
+  }
+};

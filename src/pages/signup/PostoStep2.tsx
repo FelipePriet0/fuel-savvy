@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Stepper } from '@/components/Stepper';
 import { useSignup } from '@/contexts/SignupContext';
-import { validatePassword, maskPhone, maskCEP, validateCEP, checkEmailExists, checkCNPJExists } from '@/lib/validation';
+import { validatePassword, maskPhone, maskCEP, validateCEP, validateStationData } from '@/lib/validation';
 import { PasswordValidationFeedback } from '@/components/PasswordValidationFeedback';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
@@ -168,20 +168,21 @@ export default function PostoStep2() {
     setLoading(true);
     
     try {
-      // Verificar se email já existe
-      const emailCheck = await checkEmailExists(postoData.email);
-      if (emailCheck.exists) {
-        toast.error(emailCheck.message);
-        setErrors(prev => ({ ...prev, email: emailCheck.message! }));
-        setLoading(false);
-        return;
-      }
+      // Validação consolidada de duplicatas
+      const validationResult = await validateStationData(
+        postoData.email,
+        postoData.cnpj,
+        postoData.telefone
+      );
 
-      // Verificar se CNPJ já existe
-      const cnpjCheck = await checkCNPJExists(postoData.cnpj);
-      if (cnpjCheck.exists) {
-        toast.error(cnpjCheck.message);
-        setErrors(prev => ({ ...prev, cnpj: cnpjCheck.message! }));
+      if (!validationResult.isValid) {
+        toast.error(validationResult.message || 'Dados já existem no sistema');
+        if (validationResult.field) {
+          setErrors(prev => ({ 
+            ...prev, 
+            [validationResult.field!]: validationResult.message! 
+          }));
+        }
         setLoading(false);
         return;
       }
