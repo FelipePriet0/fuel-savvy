@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { useSignup } from '@/contexts/SignupContext';
 import { validateCPF, validateEmail, validatePassword, maskCPF, maskPhone } from '@/lib/validation';
+import { PasswordValidationFeedback } from '@/components/PasswordValidationFeedback';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
@@ -227,9 +228,7 @@ export default function MotoristaForm() {
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
-              {errors.senha && (
-                <p className="text-sm text-destructive mt-1">{errors.senha}</p>
-              )}
+              <PasswordValidationFeedback password={motoristaData.senha} />
             </div>
 
             {/* Confirmar Senha */}

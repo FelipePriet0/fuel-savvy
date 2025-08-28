@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Stepper } from '@/components/Stepper';
 import { useSignup } from '@/contexts/SignupContext';
 import { validatePassword, maskPhone, maskCEP, validateCEP } from '@/lib/validation';
+import { PasswordValidationFeedback } from '@/components/PasswordValidationFeedback';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
@@ -393,9 +394,7 @@ export default function PostoStep2() {
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
-              {errors.senha && (
-                <p className="text-sm text-destructive mt-1">{errors.senha}</p>
-              )}
+              <PasswordValidationFeedback password={postoData.senha || ''} />
             </div>
 
             {/* Confirmar Senha */}

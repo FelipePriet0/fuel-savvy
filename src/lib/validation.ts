@@ -77,6 +77,16 @@ export const validatePassword = (password: string): { isValid: boolean; errors: 
   };
 };
 
+// Validação detalhada de senha para feedback visual
+export const getPasswordValidationStatus = (password: string) => {
+  return {
+    minLength: password.length >= 8,
+    hasUppercase: /[A-Z]/.test(password),
+    hasNumber: /[0-9]/.test(password),
+    isValid: password.length >= 8 && /[A-Z]/.test(password) && /[0-9]/.test(password),
+  };
+};
+
 // Validação de email
 export const validateEmail = (email: string): boolean => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
