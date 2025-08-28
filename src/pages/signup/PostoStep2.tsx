@@ -31,6 +31,7 @@ export default function PostoStep2() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [customBandeira, setCustomBandeira] = useState('');
+  const [isOutraBandeira, setIsOutraBandeira] = useState(false);
 
   const fetchAddressByCEP = async (cep: string) => {
     try {
@@ -89,10 +90,21 @@ export default function PostoStep2() {
 
   const handleBandeiraChange = (value: string) => {
     if (value === 'Outra') {
+      setIsOutraBandeira(true);
       setPostoData({ bandeira: '' });
+      setCustomBandeira('');
+      // Clear bandeira error when switching to "Outra"
+      if (errors.bandeira) {
+        setErrors(prev => ({ ...prev, bandeira: '' }));
+      }
     } else {
+      setIsOutraBandeira(false);
       setPostoData({ bandeira: value });
       setCustomBandeira('');
+      // Clear bandeira error when selecting a valid option
+      if (errors.bandeira) {
+        setErrors(prev => ({ ...prev, bandeira: '' }));
+      }
     }
   };
 
@@ -122,8 +134,12 @@ export default function PostoStep2() {
       newErrors.cidade = 'Cidade é obrigatória';
     }
 
-    if (!postoData.bandeira && customBandeira.trim() === '') {
+    if (!postoData.bandeira && !customBandeira.trim()) {
       newErrors.bandeira = 'Tipo de bandeira é obrigatório';
+    }
+    
+    if (isOutraBandeira && !customBandeira.trim()) {
+      newErrors.bandeira = 'Digite o nome da bandeira personalizada';
     }
 
     if (!postoData.responsavel_nome?.trim()) {
@@ -161,7 +177,7 @@ export default function PostoStep2() {
     setLoading(true);
     
     try {
-      const finalBandeira = customBandeira.trim() || postoData.bandeira;
+      const finalBandeira = isOutraBandeira ? customBandeira.trim() : postoData.bandeira;
       
       // Concatenar endereço completo
       const enderecoCompleto = `${postoData.rua}, ${postoData.numero}, ${postoData.bairro}, ${postoData.cidade} - CEP: ${postoData.cep}`;
@@ -327,7 +343,7 @@ export default function PostoStep2() {
             <div>
               <Label htmlFor="bandeira">Tipo de bandeira</Label>
               <Select
-                value={postoData.bandeira || (customBandeira ? 'Outra' : '')}
+                value={isOutraBandeira ? 'Outra' : postoData.bandeira || ''}
                 onValueChange={handleBandeiraChange}
               >
                 <SelectTrigger className={errors.bandeira ? 'border-destructive' : ''}>
@@ -342,12 +358,19 @@ export default function PostoStep2() {
                 </SelectContent>
               </Select>
               
-              {(postoData.bandeira === '' && customBandeira !== '') && (
+              {isOutraBandeira && (
                 <Input
                   className="mt-2"
-                  placeholder="Digite o nome da bandeira"
+                  placeholder="Digite o nome da bandeira personalizada"
                   value={customBandeira}
-                  onChange={(e) => setCustomBandeira(e.target.value)}
+                  onChange={(e) => {
+                    setCustomBandeira(e.target.value);
+                    // Clear error when typing
+                    if (errors.bandeira) {
+                      setErrors(prev => ({ ...prev, bandeira: '' }));
+                    }
+                  }}
+                  autoFocus
                 />
               )}
               
