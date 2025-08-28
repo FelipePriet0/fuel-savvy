@@ -34,6 +34,7 @@ import Precos from "./routes/posto/Precos";
 import PostoLayout from "./components/PostoLayout";
 
 import NotFound from "./pages/NotFound";
+import { AdminDashboard } from "./pages/admin/AdminDashboard";
 
 const queryClient = new QueryClient();
 
@@ -74,6 +75,9 @@ const App = () => (
                     <Route path="perfil" element={<Perfil />} />
                     <Route path="precos" element={<Precos />} />
                   </Route>
+                  
+                  {/* Admin routes */}
+                  <Route path="/admin" element={<AdminDashboard />} />
                   
                   {/* Catch-all route */}
                   <Route path="*" element={<NotFound />} />
