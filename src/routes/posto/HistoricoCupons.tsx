@@ -162,7 +162,7 @@ const HistoricoCupons = () => {
 
         {/* Stats e filtros */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="bg-gradient-surface border-zup-border">
+          <Card className="bg-gradient-surface">
             <CardHeader className="pb-3">
               <CardTitle className="text-sm font-medium text-muted-foreground">
                 Total de Usos
@@ -178,7 +178,7 @@ const HistoricoCupons = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-surface border-zup-border">
+          <Card className="bg-gradient-surface">
             <CardHeader className="pb-3">
               <CardTitle className="text-sm font-medium text-muted-foreground">
                 Valor Total Descontado
@@ -196,7 +196,7 @@ const HistoricoCupons = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-surface border-zup-border">
+          <Card className="bg-gradient-surface">
             <CardHeader className="pb-3">
               <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                 <Calendar className="h-4 w-4" />
@@ -219,12 +219,12 @@ const HistoricoCupons = () => {
         </div>
 
         {/* Tabela de histórico */}
-        <Card className="bg-gradient-surface border-zup-border">
+        <Card className="bg-gradient-surface">
           <CardContent className="p-0">
             {usos.length > 0 ? (
               <Table>
                 <TableHeader>
-                  <TableRow className="border-zup-border">
+                  <TableRow className="border-border">
                     <TableHead>Data/Hora</TableHead>
                     <TableHead>Combustível</TableHead>
                     <TableHead>Desconto</TableHead>
@@ -234,7 +234,7 @@ const HistoricoCupons = () => {
                 </TableHeader>
                 <TableBody>
                   {usos.map((uso) => (
-                    <TableRow key={uso.id} className="border-zup-border">
+                    <TableRow key={uso.id} className="border-border">
                       <TableCell>
                         <div className="flex items-center gap-2">
                           <Calendar className="h-4 w-4 text-muted-foreground" />

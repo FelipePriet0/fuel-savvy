@@ -21,7 +21,7 @@ export const FuelCard = ({
 }: FuelCardProps) => {
   return (
     <Card className={cn(
-      "relative overflow-hidden border-2 border-border hover:border-primary/50 transition-all duration-200 hover:shadow-glow/30 bg-card",
+      "relative overflow-hidden hover:shadow-[0px_2px_0px_black] hover:translate-y-0.5 transition-all duration-200 bg-card",
       className
     )}>
       {badge && (

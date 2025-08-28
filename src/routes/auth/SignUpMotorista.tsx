@@ -42,7 +42,7 @@ const SignUpMotorista = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-muted/20 p-4">
-      <Card className="w-full max-w-md bg-gradient-surface border-zup-border shadow-card">
+      <Card className="w-full max-w-md bg-gradient-surface">
         <CardHeader className="text-center space-y-4">
           <div className="flex justify-center">
             <div className="h-12 w-12 rounded-xl bg-gradient-primary flex items-center justify-center">

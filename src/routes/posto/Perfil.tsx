@@ -328,7 +328,7 @@ export default function Perfil() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
       <div className="container py-8 max-w-4xl">
-        <Card className="bg-gradient-surface border-zup-border">
+        <Card className="bg-gradient-surface">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <User className="h-5 w-5 text-primary" />
@@ -577,7 +577,7 @@ export default function Perfil() {
         </Card>
 
         {/* Seção Alterar Senha */}
-        <Card className="bg-gradient-surface border-zup-border mt-6">
+        <Card className="bg-gradient-surface mt-6">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Lock className="h-5 w-5 text-primary" />

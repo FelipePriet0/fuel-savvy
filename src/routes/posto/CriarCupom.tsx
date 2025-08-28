@@ -344,7 +344,7 @@ const CriarCupom = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
       <div className="container py-8 max-w-2xl">
-        <Card className="bg-gradient-surface border-zup-border">
+        <Card className="bg-gradient-surface">
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle className="flex items-center gap-2">
@@ -537,7 +537,7 @@ const CriarCupom = () => {
 
       {/* Modal para completar perfil */}
       <Dialog open={showCompleteProfile} onOpenChange={setShowCompleteProfile}>
-        <DialogContent className="max-w-2xl bg-gradient-surface border-zup-border">
+        <DialogContent className="max-w-2xl bg-gradient-surface">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <Building2 className="h-5 w-5 text-primary" />

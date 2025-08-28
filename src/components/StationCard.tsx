@@ -31,7 +31,7 @@ export const StationCard = ({
 }: StationCardProps) => {
   return (
     <Card className={cn(
-      "border-2 border-border hover:border-primary/30 transition-all duration-200 bg-card",
+      "hover:shadow-[0px_2px_0px_black] hover:translate-y-0.5 transition-all duration-200 bg-card",
       className
     )}>
       <CardContent className="p-6">

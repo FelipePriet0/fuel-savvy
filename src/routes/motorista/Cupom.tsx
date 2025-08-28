@@ -217,7 +217,7 @@ const Cupom = () => {
           {/* Informações principais */}
           <div className="lg:col-span-2 space-y-6">
             {/* Header do cupom */}
-            <Card className="bg-gradient-surface border-zup-border">
+            <Card className="bg-gradient-surface">
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div className="space-y-2">
@@ -308,7 +308,7 @@ const Cupom = () => {
 
             {/* Ação principal */}
             {!isExpired && (
-              <Card className="bg-gradient-surface border-zup-border">
+              <Card className="bg-gradient-surface">
                 <CardContent className="p-6">
                   {jaUsado ? (
                     <div className="text-center space-y-2">
@@ -353,7 +353,7 @@ const Cupom = () => {
 
           {/* Informações do posto */}
           <div className="space-y-6">
-            <Card className="bg-gradient-surface border-zup-border">
+            <Card className="bg-gradient-surface">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <MapPin className="h-5 w-5 text-primary" />

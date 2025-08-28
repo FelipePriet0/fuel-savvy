@@ -14,7 +14,7 @@ interface StatCardProps {
 
 const StatCard = ({ title, value, subtitle, icon: Icon, trend }: StatCardProps) => {
   return (
-    <Card className="bg-gradient-surface border-zup-border hover:shadow-glow/50 transition-all duration-300">
+    <Card className="bg-gradient-surface hover:shadow-[0px_2px_0px_black] hover:translate-y-0.5 transition-all duration-300">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium text-muted-foreground">
           {title}

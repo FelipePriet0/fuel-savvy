@@ -47,7 +47,7 @@ const CouponCard = ({ cupom }: CupomCardProps) => {
   }
 
   return (
-    <Card className="group hover:shadow-glow transition-all duration-300 bg-gradient-surface border-zup-border">
+    <Card className="group hover:shadow-[0px_2px_0px_black] hover:translate-y-0.5 transition-all duration-300 bg-gradient-surface">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="text-lg font-semibold flex items-center gap-2">

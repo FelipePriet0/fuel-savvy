@@ -316,7 +316,7 @@ const Dashboard = () => {
         </div>
 
         {/* Seção de Cupons com Tabs */}
-        <Card className="bg-gradient-surface border-zup-border">
+        <Card className="bg-gradient-surface">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Ticket className="h-5 w-5 text-primary" />
@@ -410,7 +410,7 @@ const Dashboard = () => {
                     <div className="border rounded-lg">
                       <Table>
                         <TableHeader>
-                          <TableRow className="border-zup-border">
+                          <TableRow className="border-border">
                             <TableHead>Combustível</TableHead>
                             <TableHead>Desconto</TableHead>
                             <TableHead>Gasto Mín.</TableHead>
@@ -421,7 +421,7 @@ const Dashboard = () => {
                         </TableHeader>
                         <TableBody>
                           {cuponsFiltered.map((cupom) => (
-                            <TableRow key={cupom.id} className="border-zup-border">
+                            <TableRow key={cupom.id} className="border-border">
                               <TableCell className="font-medium">
                                 <div>
                                   <div>{cupom.combustivel}</div>
