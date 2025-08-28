@@ -19,13 +19,13 @@ export const getCurrentUser = async (): Promise<UserWithRole | null> => {
     { data: posto, error: postoError }
   ] = await Promise.all([
     supabase
-      .from('perfis')
+      .from('profiles')
       .select('role')
       .eq('id', user.id)
       .maybeSingle(),
     supabase
-      .from('postos')
-      .select('role')
+      .from('stations')
+      .select('*')
       .eq('id', user.id)
       .maybeSingle()
   ])
@@ -40,10 +40,10 @@ export const getCurrentUser = async (): Promise<UserWithRole | null> => {
     return { ...user, role: posto.role as UserRole }
   }
 
-  // Se encontrou em postos, retornar como posto
-  if (posto && posto.role) {
-    console.log('✅ Usuário identificado como posto:', posto.role)
-    return { ...user, role: posto.role as UserRole }
+  // Se encontrou em stations, retornar como posto
+  if (posto) {
+    console.log('✅ Usuário identificado como posto')
+    return { ...user, role: 'posto' as UserRole }
   }
 
   // Se encontrou em perfis, retornar como motorista
@@ -74,9 +74,9 @@ export const signUp = async (email: string, password: string, userData: any, rol
     
     try {
       if (role === 'motorista') {
-        console.log('👤 Inserindo dados na tabela perfis...')
+        console.log('👤 Inserindo dados na tabela profiles...')
         const { error: profileError } = await supabase
-          .from('perfis')
+          .from('profiles')
           .insert({
             id: data.user.id,
             role: 'motorista',
@@ -90,13 +90,11 @@ export const signUp = async (email: string, password: string, userData: any, rol
         console.log('✅ Perfil de motorista criado com sucesso')
         
       } else if (role === 'posto') {
-        console.log('🏭 Inserindo dados na tabela postos...')
+        console.log('🏭 Inserindo dados na tabela stations...')
         const { error: postoError } = await supabase
-          .from('postos')
+          .from('stations')
           .insert({
             id: data.user.id,
-            role: 'posto',
-            status: 'incomplete',
             ...userData
           })
 

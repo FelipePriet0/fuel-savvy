@@ -10,7 +10,7 @@ import { Stepper } from '@/components/Stepper';
 import { useSignup } from '@/contexts/SignupContext';
 import { validatePassword, maskPhone, maskCEP, validateCEP, validateStationData } from '@/lib/validation';
 import { PasswordValidationFeedback } from '@/components/PasswordValidationFeedback';
-import { supabase } from '@/integrations/supabase/client';
+import { signUp } from '@/lib/auth';
 import { toast } from 'sonner';
 
 const BANDEIRAS = [
@@ -192,23 +192,17 @@ export default function PostoStep2() {
       // Concatenar endereço completo
       const enderecoCompleto = `${postoData.rua}, ${postoData.numero}, ${postoData.bairro}, ${postoData.cidade} - CEP: ${postoData.cep}`;
 
-      const { error } = await supabase.auth.signUp({
+      // Usar a função signUp consolidada do lib/auth
+      await signUp(postoData.email, postoData.senha!, {
+        cnpj: postoData.cnpj,
+        station_name: postoData.nome_fantasia,
         email: postoData.email,
-        password: postoData.senha!,
-        options: {
-          emailRedirectTo: `${window.location.origin}/`,
-          data: {
-            user_type: 'posto',
-            cnpj: postoData.cnpj,
-            nome_fantasia: postoData.nome_fantasia,
-            telefone: postoData.telefone,
-            endereco: enderecoCompleto,
-            bandeira: finalBandeira,
-          }
-        }
-      });
-
-      if (error) throw error;
+        phone: postoData.telefone,
+        address: enderecoCompleto,
+        city: postoData.cidade,
+        state: 'SP', // TODO: Adicionar campo UF no formulário
+        zip_code: postoData.cep
+      }, 'posto');
 
       toast.success('Cadastro realizado com sucesso!');
       resetContext();

@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { useSignup } from '@/contexts/SignupContext';
 import { validateCPF, validateEmail, validatePassword, maskCPF, maskPhone, validateDriverData } from '@/lib/validation';
 import { PasswordValidationFeedback } from '@/components/PasswordValidationFeedback';
-import { supabase } from '@/integrations/supabase/client';
+import { signUp } from '@/lib/auth';
 import { toast } from 'sonner';
 
 export default function MotoristaForm() {
@@ -114,21 +114,13 @@ export default function MotoristaForm() {
         return;
       }
 
-      const { error } = await supabase.auth.signUp({
-        email: motoristaData.email,
-        password: motoristaData.senha,
-        options: {
-          emailRedirectTo: `${window.location.origin}/`,
-          data: {
-            user_type: 'motorista',
-            nome: motoristaData.nome,
-            cpf: motoristaData.cpf,
-            telefone: motoristaData.telefone,
-          }
-        }
-      });
-
-      if (error) throw error;
+      // Usar a função signUp consolidada do lib/auth
+      await signUp(motoristaData.email, motoristaData.senha!, {
+        full_name: motoristaData.nome,
+        phone: motoristaData.telefone,
+        cpf: motoristaData.cpf,
+        email: motoristaData.email
+      }, 'motorista');
 
       toast.success('Cadastro realizado com sucesso!');
       resetContext();
