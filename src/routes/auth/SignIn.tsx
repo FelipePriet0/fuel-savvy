@@ -40,7 +40,7 @@ const SignIn = () => {
         <CardHeader className="text-center space-y-4">
           <div className="flex justify-center">
             <div className="h-12 w-12 rounded-xl bg-gradient-primary flex items-center justify-center">
-              <Fuel className="h-6 w-6 text-black" />
+              <Fuel className="h-6 w-6 text-black" stroke="black" strokeWidth="2" />
             </div>
           </div>
           <div>
@@ -60,7 +60,7 @@ const SignIn = () => {
             <div className="space-y-2">
               <Label htmlFor="email">E-mail</Label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" stroke="black" strokeWidth="2" />
                 <Input id="email" type="email" placeholder="seu@email.com" value={email} onChange={e => setEmail(e.target.value)} required className="pl-10" />
               </div>
             </div>
@@ -68,7 +68,7 @@ const SignIn = () => {
             <div className="space-y-2">
               <Label htmlFor="password">Senha</Label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" stroke="black" strokeWidth="2" />
                 <Input id="password" type="password" placeholder="••••••••" value={password} onChange={e => setPassword(e.target.value)} required className="pl-10" />
               </div>
             </div>
@@ -84,7 +84,7 @@ const SignIn = () => {
             </div>
 
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+              {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2" stroke="black" strokeWidth="2" /> : null}
               {loading ? 'Entrando...' : 'Entrar'}
             </Button>
           </form>

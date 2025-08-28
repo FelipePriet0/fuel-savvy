@@ -51,7 +51,7 @@ const CouponCard = ({ cupom }: CupomCardProps) => {
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="text-lg font-semibold flex items-center gap-2">
-            <Fuel className="h-5 w-5 text-primary" />
+            <Fuel className="h-5 w-5 text-primary" stroke="black" strokeWidth="2" />
             {cupom.combustivel}
           </CardTitle>
           <Badge variant="outline" className="border-primary/30 text-primary">
@@ -81,7 +81,7 @@ const CouponCard = ({ cupom }: CupomCardProps) => {
 
         {/* Benefício */}
         <div className="flex items-center gap-2 text-primary">
-          <DollarSign className="h-4 w-4" />
+          <DollarSign className="h-4 w-4" stroke="black" strokeWidth="2" />
           <span className="text-sm font-medium">
             Economize {formatarPreco(cupom.desconto_total)} no total no mínimo de {formatarPreco(cupom.gasto_minimo)}
           </span>
@@ -95,7 +95,7 @@ const CouponCard = ({ cupom }: CupomCardProps) => {
 
         {/* Validade */}
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Clock className="h-4 w-4" />
+          <Clock className="h-4 w-4" stroke="black" strokeWidth="2" />
           <span>
             Válido até {formatarData(cupom.validade_fim)}
           </span>
@@ -104,7 +104,7 @@ const CouponCard = ({ cupom }: CupomCardProps) => {
         {/* Localização */}
         {cupom.posto?.lat && cupom.posto?.lng && (
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <MapPin className="h-4 w-4" />
+            <MapPin className="h-4 w-4" stroke="black" strokeWidth="2" />
             <span>Localização disponível</span>
           </div>
         )}

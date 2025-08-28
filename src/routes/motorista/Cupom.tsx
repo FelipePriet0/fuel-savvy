@@ -176,7 +176,7 @@ const Cupom = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <Loader2 className="h-8 w-8 animate-spin text-primary" stroke="black" strokeWidth="2" />
       </div>
     )
   }
@@ -208,7 +208,7 @@ const Cupom = () => {
         {/* Voltar */}
         <Button variant="ghost" asChild className="mb-6">
           <Link to="/" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" />
+            <ArrowLeft className="h-4 w-4" stroke="black" strokeWidth="2" />
             Voltar aos cupons
           </Link>
         </Button>
@@ -222,11 +222,11 @@ const Cupom = () => {
                 <div className="flex items-start justify-between">
                   <div className="space-y-2">
                     <CardTitle className="text-2xl flex items-center gap-2">
-                      <Fuel className="h-6 w-6 text-primary" />
+                      <Fuel className="h-6 w-6 text-primary" stroke="black" strokeWidth="2" />
                       {cupom.combustivel}
                     </CardTitle>
                     <div className="flex items-center gap-2">
-                      <Building2 className="h-4 w-4 text-muted-foreground" />
+                      <Building2 className="h-4 w-4 text-muted-foreground" stroke="black" strokeWidth="2" />
                       <span className="font-medium">{cupom.posto?.nome_fantasia}</span>
                       {cupom.posto?.bandeira && (
                         <Badge variant="outline" className="border-primary/30 text-primary">
@@ -243,7 +243,7 @@ const Cupom = () => {
                   )}
                   {jaUsado && (
                     <Badge className="bg-primary/20 text-primary border-primary/30">
-                      <CheckCircle className="h-3 w-3 mr-1" />
+                      <CheckCircle className="h-3 w-3 mr-1" stroke="black" strokeWidth="2" />
                       Utilizado
                     </Badge>
                   )}
@@ -271,7 +271,7 @@ const Cupom = () => {
 
                 {/* Benefício */}
                 <div className="flex items-center gap-3 text-primary bg-primary/5 p-4 rounded-lg">
-                  <DollarSign className="h-5 w-5 flex-shrink-0" />
+                  <DollarSign className="h-5 w-5 flex-shrink-0" stroke="black" strokeWidth="2" />
                   <div>
                     <div className="font-semibold">
                       Economize {formatarPreco(cupom.desconto_total)} no total
@@ -285,7 +285,7 @@ const Cupom = () => {
                 {/* Regras */}
                 <div className="bg-muted/50 p-4 rounded-lg space-y-3">
                   <h4 className="font-semibold flex items-center gap-2">
-                    <AlertCircle className="h-4 w-4" />
+                    <AlertCircle className="h-4 w-4" stroke="black" strokeWidth="2" />
                     Como funciona
                   </h4>
                   <ul className="text-sm text-muted-foreground space-y-2">
@@ -298,7 +298,7 @@ const Cupom = () => {
 
                 {/* Validade */}
                 <div className="flex items-center gap-2 text-muted-foreground">
-                  <Clock className="h-4 w-4" />
+                  <Clock className="h-4 w-4" stroke="black" strokeWidth="2" />
                   <span className="text-sm">
                     Válido até {formatarData(cupom.validade_fim)}
                   </span>
@@ -312,7 +312,7 @@ const Cupom = () => {
                 <CardContent className="p-6">
                   {jaUsado ? (
                     <div className="text-center space-y-2">
-                      <CheckCircle className="h-8 w-8 text-primary mx-auto" />
+                      <CheckCircle className="h-8 w-8 text-primary mx-auto" stroke="black" strokeWidth="2" />
                       <h3 className="font-semibold">Cupom já utilizado</h3>
                       <p className="text-sm text-muted-foreground">
                         Você já registrou o uso deste cupom
@@ -334,12 +334,12 @@ const Cupom = () => {
                       >
                         {marcandoUso ? (
                           <>
-                            <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                            <Loader2 className="h-4 w-4 animate-spin mr-2" stroke="black" strokeWidth="2" />
                             Registrando uso...
                           </>
                         ) : (
                           <>
-                            <CheckCircle className="h-4 w-4 mr-2" />
+                            <CheckCircle className="h-4 w-4 mr-2" stroke="black" strokeWidth="2" />
                             Marcar como utilizado
                           </>
                         )}
@@ -356,7 +356,7 @@ const Cupom = () => {
             <Card className="bg-gradient-surface">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <MapPin className="h-5 w-5 text-primary" />
+                  <MapPin className="h-5 w-5 text-primary" stroke="black" strokeWidth="2" />
                   Informações do Posto
                 </CardTitle>
               </CardHeader>
@@ -372,7 +372,7 @@ const Cupom = () => {
 
                 {cupom.posto?.telefone && (
                   <div className="flex items-center gap-2 text-sm">
-                    <Phone className="h-4 w-4 text-muted-foreground" />
+                    <Phone className="h-4 w-4 text-muted-foreground" stroke="black" strokeWidth="2" />
                     <span>{cupom.posto.telefone}</span>
                   </div>
                 )}
@@ -405,7 +405,7 @@ const Cupom = () => {
                       rel="noopener noreferrer"
                       className="flex items-center gap-2"
                     >
-                      <ExternalLink className="h-4 w-4" />
+                      <ExternalLink className="h-4 w-4" stroke="black" strokeWidth="2" />
                       Ver rota no mapa
                     </a>
                   </Button>

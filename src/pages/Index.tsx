@@ -20,19 +20,19 @@ const Index = () => {
     {
       title: "Gasolina",
       description: "Combustível mais popular para carros de passeio",
-      icon: <Fuel className="w-8 h-8 text-primary" />,
+      icon: <Fuel className="w-8 h-8 text-primary" stroke="black" strokeWidth="2" />,
       badge: "Mais Popular"
     },
     {
       title: "Etanol",
       description: "Opção sustentável e econômica",
-      icon: <Zap className="w-8 h-8 text-primary" />,
+      icon: <Zap className="w-8 h-8 text-primary" stroke="black" strokeWidth="2" />,
       badge: "Eco-Friendly"
     },
     {
       title: "Diesel",
       description: "Ideal para veículos pesados e caminhões",
-      icon: <Truck className="w-8 h-8 text-primary" />,
+      icon: <Truck className="w-8 h-8 text-primary" stroke="black" strokeWidth="2" />,
       badge: "Profissional"
     }
   ]
@@ -41,22 +41,22 @@ const Index = () => {
     {
       title: "Tendências",
       subtitle: "Preços em alta",
-      icon: <TrendingUp className="w-full h-full" />
+      icon: <TrendingUp className="w-full h-full" stroke="black" strokeWidth="2" />
     },
     {
       title: "Promoções",
       subtitle: "Ofertas especiais",
-      icon: <Gift className="w-full h-full" />
+      icon: <Gift className="w-full h-full" stroke="black" strokeWidth="2" />
     },
     {
       title: "Próximos",
       subtitle: "Postos perto de você",
-      icon: <MapPin className="w-full h-full" />
+      icon: <MapPin className="w-full h-full" stroke="black" strokeWidth="2" />
     },
     {
       title: "Comunidade",
       subtitle: "Avaliações dos usuários",
-      icon: <Users className="w-full h-full" />
+      icon: <Users className="w-full h-full" stroke="black" strokeWidth="2" />
     }
   ]
 
@@ -98,7 +98,7 @@ const Index = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-                <Fuel className="w-5 h-5 text-primary-foreground" />
+                <Fuel className="w-5 h-5 text-primary-foreground" stroke="black" strokeWidth="2" />
               </div>
               <h1 className="text-xl font-bold text-foreground">Zup Gás</h1>
             </div>
@@ -177,14 +177,14 @@ const Index = () => {
             </h2>
             <div className="max-w-md mx-auto flex gap-2">
               <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" stroke="black" strokeWidth="2" />
                 <Input 
                   placeholder="Digite seu CEP ou cidade"
                   className="pl-10"
                 />
               </div>
               <Button className="bg-primary hover:bg-primary/90">
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4" stroke="black" strokeWidth="2" />
               </Button>
             </div>
           </div>

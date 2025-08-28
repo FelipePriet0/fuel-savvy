@@ -93,7 +93,7 @@ const Home = () => {
 
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <Loader2 className="h-8 w-8 animate-spin text-primary" stroke="black" strokeWidth="2" />
       </div>;
   }
 
@@ -116,7 +116,7 @@ const Home = () => {
           <CardContent className="p-6">
             <div className="flex items-center gap-4">
               <div className="p-3 bg-primary/10 rounded-lg border-2 border-black">
-                <Wallet className="h-8 w-8 text-primary" />
+                <Wallet className="h-8 w-8 text-primary" stroke="black" strokeWidth="2" />
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Total Economizado</p>
@@ -137,12 +137,12 @@ const Home = () => {
           {/* Filtros */}
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" stroke="black" strokeWidth="2" />
               <Input placeholder="Buscar por posto ou combustível..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-10" />
             </div>
             
             <div className="flex items-center gap-2">
-              <Filter className="h-4 w-4 text-muted-foreground" />
+              <Filter className="h-4 w-4 text-muted-foreground" stroke="black" strokeWidth="2" />
               <Select value={selectedCombustivel} onValueChange={setSelectedCombustivel}>
                 <SelectTrigger className="w-40">
                   <SelectValue />
@@ -169,7 +169,7 @@ const Home = () => {
         {filteredCupons.length > 0 ? <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {filteredCupons.map(cupom => <CouponCard key={cupom.id} cupom={cupom} />)}
           </div> : <div className="text-center py-16">
-            <Fuel className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+            <Fuel className="h-16 w-16 text-muted-foreground mx-auto mb-4" stroke="black" strokeWidth="2" />
             <h3 className="text-xl font-semibold mb-2">Nenhum cupom encontrado</h3>
             <p className="text-muted-foreground">
               {searchTerm || selectedCombustivel !== 'todos' ? 'Tente ajustar os filtros de busca' : 'Não há cupons ativos no momento'}

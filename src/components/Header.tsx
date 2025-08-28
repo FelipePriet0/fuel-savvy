@@ -59,7 +59,7 @@ const Header = () => {
         <div className="flex items-center space-x-2">
           {user ? (
             <Button variant="outline" size="sm" onClick={handleSignOut}>
-              <LogOut className="h-4 w-4 mr-2" />
+              <LogOut className="h-4 w-4 mr-2" stroke="black" strokeWidth="2" />
               Sair
             </Button>
           ) : (

@@ -46,7 +46,7 @@ const SignUpPosto = () => {
         <CardHeader className="text-center space-y-4">
           <div className="flex justify-center">
             <div className="h-12 w-12 rounded-xl bg-gradient-primary flex items-center justify-center">
-              <MapPin className="h-6 w-6 text-black" />
+              <MapPin className="h-6 w-6 text-black" stroke="black" strokeWidth="2" />
             </div>
           </div>
           <div>
@@ -68,7 +68,7 @@ const SignUpPosto = () => {
             <div className="space-y-2">
               <Label htmlFor="cnpj">CNPJ</Label>
               <div className="relative">
-                <CreditCard className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                <CreditCard className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" stroke="black" strokeWidth="2" />
                 <Input
                   id="cnpj"
                   name="cnpj"
@@ -84,7 +84,7 @@ const SignUpPosto = () => {
             <div className="space-y-2">
               <Label htmlFor="nome_fantasia">Nome do posto</Label>
               <div className="relative">
-                <Building2 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                <Building2 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" stroke="black" strokeWidth="2" />
                 <Input
                   id="nome_fantasia"
                   name="nome_fantasia"
@@ -100,7 +100,7 @@ const SignUpPosto = () => {
             <div className="space-y-2">
               <Label htmlFor="email">E-mail</Label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" stroke="black" strokeWidth="2" />
                 <Input
                   id="email"
                   name="email"
@@ -117,7 +117,7 @@ const SignUpPosto = () => {
             <div className="space-y-2">
               <Label htmlFor="telefone">Telefone</Label>
               <div className="relative">
-                <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" stroke="black" strokeWidth="2" />
                 <Input
                   id="telefone"
                   name="telefone"
@@ -133,7 +133,7 @@ const SignUpPosto = () => {
             <div className="space-y-2">
               <Label htmlFor="password">Senha</Label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" stroke="black" strokeWidth="2" />
                 <Input
                   id="password"
                   name="password"
@@ -149,7 +149,7 @@ const SignUpPosto = () => {
 
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? (
-                <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                <Loader2 className="h-4 w-4 animate-spin mr-2" stroke="black" strokeWidth="2" />
               ) : null}
               {loading ? 'Criando conta...' : 'Criar conta'}
             </Button>

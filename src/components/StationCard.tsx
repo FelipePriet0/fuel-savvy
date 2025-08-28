@@ -41,7 +41,7 @@ export const StationCard = ({
             <div className="flex-1">
               <h3 className="font-semibold text-lg text-foreground mb-1">{name}</h3>
               <div className="flex items-center text-sm text-muted-foreground">
-                <MapPin className="w-4 h-4 mr-1" />
+                <MapPin className="w-4 h-4 mr-1" stroke="black" strokeWidth="2" />
                 <span>{address}</span>
                 {distance && <span className="ml-2">• {distance}</span>}
               </div>
@@ -57,13 +57,15 @@ export const StationCard = ({
           <div className="flex items-center space-x-2">
             <div className="flex items-center">
               {[1, 2, 3, 4, 5].map((star) => (
-                <Star 
-                  key={star}
-                  className={cn(
-                    "w-4 h-4",
-                    star <= rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"
-                  )}
-                />
+                 <Star 
+                   key={star}
+                   className={cn(
+                     "w-4 h-4",
+                     star <= rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"
+                   )}
+                   stroke="black"
+                   strokeWidth="2"
+                 />
               ))}
             </div>
             <span className="text-sm text-muted-foreground">
