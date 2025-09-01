@@ -115,8 +115,8 @@ const Home = () => {
         <Card className="bg-white border-2 border-black rounded-lg" style={{ boxShadow: '0px 4px 0px black' }}>
           <CardContent className="p-6">
             <div className="flex items-center gap-4">
-              <div className="p-3 bg-primary/10 rounded-lg border-2 border-black">
-                <Wallet className="h-8 w-8 text-primary" stroke="black" strokeWidth="2" />
+              <div className="p-3 bg-primary rounded-lg border-2 border-black">
+                <Wallet className="h-8 w-8 text-primary-foreground" stroke="black" strokeWidth="2" />
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Total Economizado</p>
