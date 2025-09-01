@@ -7,7 +7,7 @@
 @layer base {
   :root {
     /* ZUP Design System - Light Theme (matching images) */
-    --zup-primary: 158 95% 56%; /* #2AF598 */
+    --zup-primary: 82 73% 66%; /* #BAE869 */
     --zup-primary-foreground: 0 0% 100%;
     
     --zup-bg: 0 0% 100%; /* Pure white */
@@ -44,7 +44,7 @@
     --radius: 0.75rem;
     
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--zup-primary)), hsl(158 90% 45%));
+    --gradient-primary: linear-gradient(135deg, hsl(var(--zup-primary)), hsl(82 70% 55%));
     --gradient-surface: linear-gradient(145deg, hsl(0 0% 100%), hsl(220 13% 98%));
     
     /* Shadows */
